@@ -20,10 +20,10 @@ export default function NotFound() {
       </div>
       <div className='flex flex-col items-center space-y-1'>
         <Text variant={"h1"} className='text-foreground/50'>
-          Sorry, this page isn't avialable
+          Sorry, this page isn&apos;t avialable
         </Text>
         <Text variant={"p"} className='text-foreground/50'>
-          The page you&apos;re looking for couldn't be found
+          The page you&apos;re looking for couldn&apos;t be found
         </Text>
       </div>
       <Text variant={"h5"}>
