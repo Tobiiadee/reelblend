@@ -1,31 +1,132 @@
 /** @format */
 
+"use client";
+
+import { convertDate } from "@/lib/helpers/helpers";
 import { Text } from "@/modules/common/components/text";
+import { Button } from "@/modules/common/ui/button";
 import { Separator } from "@/modules/common/ui/separator";
-import { Star } from "lucide-react";
+import { Bookmark, Heart, Star } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/modules/common/ui/tooltip";
+import { toast } from "sonner";
 
-export default function MovieCard() {
+interface MovieCardProps {
+  posterPath: string;
+  title: string;
+  year: string;
+  id: number;
+  rating: number;
+}
+
+export default function MovieCard({
+  posterPath,
+  rating,
+  title,
+  year,
+  id,
+}: MovieCardProps) {
+  const [fav, setFav] = useState(false);
+
+  const onClickFav = () => setFav((prev) => !prev);
+  const movieYear = convertDate(year as string);
+  const movieRating =
+    typeof rating === "number" && !isNaN(rating) ? rating.toFixed(1) : "N/A";
+
+  if (fav === true) toast.success("Movie added to watchlist");
+
   return (
-    <div className='flex flex-col space-y-2 md:hover:scale-105 md:active:scale-100 transition duration-200 cursor-pointer'>
-      <div className='w-full h-[15rem] shadow-2xl rounded-xl relative overflow-hidden'>
-        <Image src={"/images/img2.jpg"} alt='' layout='fill' />
-      </div>
+    <div className='w-full relative group'>
+      <div className='flex flex-col w-full min-w-[300px] md:min-w-[280px] lg:min-w-[220px] aspect-video  space-y-1 transition duration-200'>
+        <Link
+          href={`/dashboard/${title?.replace(/\s+/g, "_")}${id}`}
+          className='w-full h-full'>
+          <div className='w-full h-full rounded-lg relative overflow-hidden'>
+            <Image
+              src={`https://image.tmdb.org/t/p/w500${posterPath}`}
+              alt={`poster for ${title}`}
+              fill
+              className='object-cover'
+              priority
+            />
+          </div>
+        </Link>
 
-      <div className=''>
-        <Text variant={"p"}>Pikachu</Text>
-      </div>
-      <div className='flex space-x-2 items-center'>
-        <div className='flex items-center space-x-2'>
-          <Star fill='#dc7633' strokeWidth={0} size={18} />
-          <Text variant={"p"}>4.6</Text>
+        <div className=''>
+          <Text variant={"p"} className='font-medium'>
+            {title}
+          </Text>
         </div>
-        <Separator orientation="vertical"/>
-        <div>
-          <Text variant={"p"}>2023</Text>
+
+        <div className='flex space-x-2 items-center justify-between'>
+          <div className='flex space-x-3 items-center w-full'>
+            <div className='flex items-center space-x-1 md:space-x-2'>
+              <Star fill='#dc7633' strokeWidth={0} size={18} />
+              <Text variant={"p"} className='font-medium'>
+                {movieRating}
+              </Text>
+            </div>
+
+            <div className='h-[1.3rem]'>
+              <Separator orientation='vertical' className='' />
+            </div>
+
+            <div>
+              <Text variant={"p"} className='font-medium'>
+                {movieYear?.year}
+              </Text>
+            </div>
+          </div>
+
+          <FavButton onClickFav={onClickFav} fav={fav} />
         </div>
       </div>
     </div>
+  );
+}
+
+function FavButton({
+  onClickFav,
+  fav,
+}: {
+  onClickFav: () => void;
+  fav: boolean;
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            onClick={onClickFav}
+            variant={"ghost"}
+            className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
+            <Heart
+              size={20}
+              strokeWidth={1}
+              color='#f84531'
+              fill={fav ? "#f84531" : "transparent"}
+            />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {!fav ? (
+            <Text variant={"p"} className='text-[10px]'>
+              Add to watchlist
+            </Text>
+          ) : (
+            <Text variant={"p"} className='text-[10px]'>
+              Remove to watchlist
+            </Text>
+          )}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

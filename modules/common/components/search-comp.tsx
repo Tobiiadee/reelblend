@@ -1,30 +1,51 @@
 /** @format */
 
-"use client";
-
-import { Search } from "lucide-react";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
 import { Button } from "../ui/button";
+import { Search } from "lucide-react";
+import SearchMovieResultsMobile from "./search-movie-results-mobile";
+import { useRouter } from "next/navigation";
+import { SheetClose } from "../ui/sheet";
 
 export default function SearchComp() {
+  const router = useRouter();
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  const searchHandler = () => {
+    router.push("./search");
+    if (!closeRef.current) return;
+    closeRef.current.click();
+  };
+
+  const mobileSearchHandler = () => {
+    if (!closeRef.current) return;
+    closeRef.current.click();
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, }}
-      animate={{ opacity: 1, x: 50 }}
-      exit={{ opacity: 0, x: 100 }}
-      transition={{ duration: 0.4 }}
-      className='w-[40rem] absolute left-[20%] top-[100%]'>
-      <div className='w-full flex space-x-1 items-center border border-r-0 border-foreground pl-4 rounded-3xl'>
+    <div className='w-full h-full flex flex-col space-y-8'>
+      <div className='w-full flex space-x-1 bg-transparent items-center border-b border-foreground/40 px-2'>
         <input
           id='search-movie'
           placeholder='Search for a movie'
-          className='w-full border-none outline-none text-[14px] placeholder:text-[14px]'
+          className='w-full border-none outline-none text-[14px] bg-transparent placeholder:text-foreground/50 placeholder:text-[14px]'
         />
-        <Button variant={"link"} className='rounded-full bg-foreground text-background active:scale-95 transition-all duration-300 py-2.5 px-2.5'>
-          <Search strokeWidth={2} size={18} />
+        <Button
+          onClick={searchHandler}
+          variant={"link"}
+          className='rounded-full group text-foreground py-2.5 px-2.5'>
+          <Search
+            strokeWidth={2}
+            size={18}
+            className='group-active:scale-90 transition-all duration-300'
+          />
         </Button>
       </div>
-    </motion.div>
+
+      <SearchMovieResultsMobile closeSearch={mobileSearchHandler}/>
+      <SheetClose ref={closeRef} className='hidden sr-only'>
+        close
+      </SheetClose>
+    </div>
   );
 }

@@ -6,6 +6,9 @@
 
 @layer base {
   :root {
+    --font-sans: "Raleway Variable", serif;
+    --font-serif: "Dancing Script Variable", cursive;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -70,5 +73,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  #hide-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  #hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  .bg-progress {
+    background: conic-gradient(#4caf50 calc(75 * 1%), #d3d3d3 0);
   }
 }

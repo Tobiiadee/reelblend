@@ -26,7 +26,7 @@ const ToggleTheme = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant='outline'
+          variant='ghost'
           className='border-none focus:border-none'
           size='icon'>
           <SunIcon className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
@@ -34,7 +34,7 @@ const ToggleTheme = () => {
           <span className='sr-only'>Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='center'>
+      <DropdownMenuContent align='center' className="absolute left-6 bottom-6">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>

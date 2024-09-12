@@ -1,22 +1,24 @@
 /** @format */
+"use client"
 
-import MovieCard from "@/layout/components/movie-card";
 import MovieSelect from "@/layout/components/movie-select";
-import SearchComp from "@/modules/common/components/search-comp";
+import ScrollUpBtn from "@/modules/common/components/scroll-up-btn";
+import MovieMain from "@/layout/components/movie-main";
+import useTypeStateStore from "@/modules/store/set-type-store";
+import SeriesMain from "@/layout/components/series-main";
 
 export default function Home() {
-  return (
-    <main className=''>
-      {/* <SearchComp /> */}
-      <div className=''>
-        <MovieSelect />
-      </div>
+  const { typeState } = useTypeStateStore();
+ 
+  
 
-      <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-10 w-full'>
-        {Array.from({ length: 10 }).map((_, i) => (
-          <MovieCard key={i} />
-        ))}
-      </div>
+  const active = typeState === "series";
+
+  return (
+    <main id='top-one' className='relative pb-24'>
+      <MovieSelect />
+      {active ? <SeriesMain /> : <MovieMain />}
+      <ScrollUpBtn />
     </main>
   );
 }

@@ -1,26 +1,26 @@
 /** @format */
+"use client";
 
 import React from "react";
 import { Button } from "../ui/button";
-import { Search, X } from "lucide-react";
+import { Search } from "lucide-react";
+
 
 export default function TopBarSearch({
-  onClick,
-  search,
+  searchAction,
 }: {
-  onClick: () => void;
-  search: boolean;
+  searchAction: () => void;
 }) {
   return (
     <Button
-      onClick={onClick}
+      onClick={searchAction}
       variant={"ghost"}
-      className='rounded-full bg-background active:scale-95 transition-all border border-foreground duration-300 hover:bg-background px-2.5'>
-      {search ? (
-        <X size={15} strokeWidth={3} />
-      ) : (
-        <Search size={15} strokeWidth={3} />
-      )}
+      className={`rounded-full text-foreground group bg-background hover:text-foreground px-[0.7rem]`}>
+      <Search
+        size={15}
+        strokeWidth={3}
+        className='group-active:active:scale-90 transition-all duration-300'
+      />
     </Button>
   );
 }

@@ -1,13 +1,17 @@
 /** @format */
 
+import Footer from "@/layout/footer/footer";
+import SideBar from "@/layout/sidebar/sidebar";
 import TopBar from "@/layout/topbar/topbar";
 import React from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className='container mx-auto md:px-20 min-w-screen pb-14'>
+    <div className='container mx-auto md:pl-28 md:pr-16 relative min-w-screen'>
       <TopBar />
-      <div className='mt-12'>{children}</div>
+      <SideBar />
+      <div className='mt-24 md:mt-28'>{children}</div>
+      <Footer />
     </div>
   );
 }
