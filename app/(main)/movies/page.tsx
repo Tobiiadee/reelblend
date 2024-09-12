@@ -5,7 +5,7 @@
 import MoviePaginationNav from "@/layout/components/movie-pagination-nav";
 import PaginationMovies from "@/layout/components/pagination-movies";
 import { Text } from "@/modules/common/components/text";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function Movies() {
   return (
@@ -16,8 +16,9 @@ export default function Movies() {
         </Text>
         <PaginationMovies />
       </div>
-
-      <MoviePaginationNav />
+      <Suspense>
+        <MoviePaginationNav />
+      </Suspense>
     </>
   );
 }

@@ -3,7 +3,7 @@
 import PaginationSeries from "@/layout/components/pagination-series";
 import SeriesPaginationNav from "@/layout/components/series-pagination-nav";
 import { Text } from "@/modules/common/components/text";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function Series() {
   return (
@@ -14,8 +14,9 @@ export default function Series() {
         </Text>
         <PaginationSeries />
       </div>
-
-      <SeriesPaginationNav />
+      <Suspense>
+        <SeriesPaginationNav />
+      </Suspense>
     </>
   );
 }
