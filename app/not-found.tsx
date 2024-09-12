@@ -23,7 +23,7 @@ export default function NotFound() {
           Sorry, this page isn't avialable
         </Text>
         <Text variant={"p"} className='text-foreground/50'>
-          The page you're looking for couldn't be found
+          The page you&apos;re looking for couldn't be found
         </Text>
       </div>
       <Text variant={"h5"}>
