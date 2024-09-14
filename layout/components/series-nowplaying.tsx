@@ -54,6 +54,7 @@ export default function NowPlayingSeries() {
               posterPath={series.poster_path}
               title={series.original_name}
               rating={series.vote_average}
+              type="series"
             />
           ))}
         </div>

@@ -55,6 +55,7 @@ export default function TopRated() {
               posterPath={movie.poster_path}
               title={movie.title}
               rating={movie.vote_average}
+              type="movie"
             />
           ))}
         </div>

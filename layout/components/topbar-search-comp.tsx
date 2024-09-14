@@ -4,12 +4,15 @@
 import Search from "@/modules/common/components/search";
 import { Text } from "@/modules/common/components/text";
 import { Button } from "@/modules/common/ui/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MobileSearch from "./mobile-search";
 import { motion, Variants } from "framer-motion";
 import useTypeStateStore from "@/modules/store/set-type-store";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import usePaginationStore from "@/modules/store/pagination-store";
+
+
 
 const AnimVariant: Variants = {
   initial: {
@@ -34,21 +37,36 @@ export default function TopBarSearchComp({
   const { setTypeState, typeState } = useTypeStateStore();
   const path = usePathname();
   const router = useRouter();
+  const { pageNumber } = usePaginationStore();
 
+  const [isDashboardSeriesPath, setIsDashboardSeriesPath] = useState(false);
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (typeof window !== "undefined") {
+      setIsDashboardSeriesPath(
+        currentPath.includes(`/dashboard/${"movies" || "series"}`)
+      );
+    }
+  }, []);
 
   useEffect(() => {
     const redirectTo = (target: string) => {
-      if (path !== "/" && !path.includes(target)) {
+      // Only redirect if the current path does not include the target
+      if (path !== `/${target}` && !path.includes(target)) {
         router.push(`/${target}`);
       }
     };
 
-    if (typeState === "movies") {
-      redirectTo("movies?page=1");
-    } else if (typeState === "series") {
-      redirectTo("series?page=1");
+    // Perform redirect only if you're on the all_movies or all_series pages
+    if (path.includes("all_movies") || path.includes("all_series")) {
+      if (typeState === "movies" && !path.includes("all_movies")) {
+        redirectTo(`all_movies?page=${pageNumber}`);
+      } else if (typeState === "series" && !path.includes("all_series")) {
+        redirectTo(`all_series?page=${pageNumber}`);
+      }
     }
-  }, [typeState]);
+  }, [typeState, path, pageNumber, router]);
 
   return (
     <>
@@ -63,6 +81,7 @@ export default function TopBarSearchComp({
             setTypeState("movies");
           }}
           variant={"link"}
+          disabled={!!isDashboardSeriesPath}
           className={`text-[#6f7377] ${
             typeState === "movies" ? "text-background" : ""
           } hover:text-background`}>
@@ -73,6 +92,7 @@ export default function TopBarSearchComp({
         <Button
           onClick={() => setTypeState("series")}
           variant={"link"}
+          disabled={!!isDashboardSeriesPath}
           className={`text-[#6f7377] ${
             typeState === "series" ? "text-background" : ""
           } hover:text-background`}>
@@ -81,6 +101,7 @@ export default function TopBarSearchComp({
           </Text>
         </Button>
         <Button
+          disabled
           variant={"link"}
           className='text-[#6f7377] focus:text-background hover:text-background'>
           <Text variant={"p"} className='font-semibold'>

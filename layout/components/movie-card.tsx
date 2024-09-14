@@ -2,7 +2,7 @@
 
 "use client";
 
-import { convertDate } from "@/lib/helpers/helpers";
+import { convertDate, modTitle } from "@/lib/helpers/helpers";
 import { Text } from "@/modules/common/components/text";
 import { Button } from "@/modules/common/ui/button";
 import { Separator } from "@/modules/common/ui/separator";
@@ -24,6 +24,7 @@ interface MovieCardProps {
   year: string;
   id: number;
   rating: number;
+  type: "movie" | "series";
 }
 
 export default function MovieCard({
@@ -32,8 +33,11 @@ export default function MovieCard({
   title,
   year,
   id,
+  type,
 }: MovieCardProps) {
   const [fav, setFav] = useState(false);
+
+  // const movieTitle = modTitle(title);
 
   const onClickFav = () => setFav((prev) => !prev);
   const movieYear = convertDate(year as string);
@@ -46,7 +50,9 @@ export default function MovieCard({
     <div className='w-full relative group'>
       <div className='flex flex-col w-full min-w-[300px] md:min-w-[280px] lg:min-w-[220px] aspect-video  space-y-1 transition duration-200'>
         <Link
-          href={`/dashboard/${title?.replace(/\s+/g, "_")}${id}`}
+          href={`/dashboard/${
+            type === "series" ? "series" : "movies"
+          }/${id}?title=${encodeURIComponent(title)}`}
           className='w-full h-full'>
           <div className='w-full h-full rounded-lg relative overflow-hidden'>
             <Image
@@ -80,7 +86,7 @@ export default function MovieCard({
 
             <div>
               <Text variant={"p"} className='font-medium'>
-                {movieYear?.year}
+                {movieYear}
               </Text>
             </div>
           </div>

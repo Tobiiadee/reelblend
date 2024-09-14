@@ -45,7 +45,7 @@ export default function SeriesPaginationNav() {
             <PaginationPrevious
               onClick={() => {
                 setPageNumber(pageNumber - 1);
-                router.push(`/series?page=${pageNumber - 1}`);
+                router.push(`/all_series?page=${pageNumber - 1}`);
               }} // Update state and navigate
             />
           </PaginationItem>
@@ -61,7 +61,7 @@ export default function SeriesPaginationNav() {
                 key={index}
                 onClick={() => {
                   setPageNumber(page); // Update the Zustand store
-                  router.push(`/series?page=${page}`);
+                  router.push(`/all_series?page=${page}`);
                 }} // Update state and navigate
               >
                 <PaginationLink>{page}</PaginationLink>
@@ -76,7 +76,7 @@ export default function SeriesPaginationNav() {
             <PaginationNext
               onClick={() => {
                 setPageNumber(pageNumber + 1);
-                router.push(`/series?page=${pageNumber + 1}`);
+                router.push(`/all_series?page=${pageNumber + 1}`);
               }} // Update state and navigate
             />
           </PaginationItem>

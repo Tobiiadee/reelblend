@@ -32,6 +32,7 @@ export default function MoviePaginationNav() {
   const { setPageNumber, pageNumber } = usePaginationStore();
 
   const router = useRouter();
+  
   const searchParams = useSearchParams();
   const pageNav = searchParams ? searchParams.get("page") : undefined;
 
@@ -45,7 +46,7 @@ export default function MoviePaginationNav() {
             <PaginationPrevious
               onClick={() => {
                 setPageNumber(pageNumber - 1);
-                router.push(`/movies?page=${pageNumber - 1}`);
+                router.push(`/all_movies?page=${pageNumber - 1}`);
               }} // Update state and navigate
             />
           </PaginationItem>
@@ -61,7 +62,7 @@ export default function MoviePaginationNav() {
                 key={index}
                 onClick={() => {
                   setPageNumber(page); // Update the Zustand store
-                  router.push(`/movies?page=${page}`);
+                  router.push(`/all_movies?page=${page}`);
                 }} // Update state and navigate
               >
                 <PaginationLink>{page}</PaginationLink>
@@ -76,7 +77,7 @@ export default function MoviePaginationNav() {
             <PaginationNext
               onClick={() => {
                 setPageNumber(pageNumber + 1);
-                router.push(`/movies?page=${pageNumber + 1}`);
+                router.push(`/all_movies?page=${pageNumber + 1}`);
               }} // Update state and navigate
             />
           </PaginationItem>

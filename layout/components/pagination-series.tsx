@@ -33,6 +33,7 @@ export default function PaginationSeries() {
               year={series.first_air_date}
               posterPath={series.poster_path}
               rating={series.vote_average}
+              type="series"
             />
           ))
         : null}

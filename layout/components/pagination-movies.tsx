@@ -6,15 +6,22 @@ import MovieCard from "./movie-card";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMoviesPage } from "@/lib/services/tmdb-services";
 import usePaginationStore from "@/modules/store/pagination-store";
+import { Text } from "@/modules/common/components/text";
+import { notFound } from "next/navigation";
+import EmptyStateError from "@/modules/common/ui/empty-states/empty-state-error";
 
 export default function PaginationMovies() {
+  const { pageNumber } = usePaginationStore();
 
-    const { pageNumber } = usePaginationStore();
-
-  const { data: movies, isLoading } = useQuery({
+  const {
+    data: movies,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["movies", pageNumber],
     queryFn: () => getAllMoviesPage(pageNumber),
   });
+
 
   return (
     <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full md:pl-6'>
@@ -31,6 +38,7 @@ export default function PaginationMovies() {
               year={movie.release_date}
               posterPath={movie.poster_path}
               rating={movie.vote_average}
+              type='movie'
             />
           ))
         : null}

@@ -33,6 +33,7 @@ export default function UpcomingSeries() {
             title={series.original_name}
             rating={series.vote_average}
             posterPath={series.poster_path}
+            type="series"
           />
         ))}
       </div>

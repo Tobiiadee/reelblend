@@ -12,7 +12,7 @@ export default function Error() {
 
   return (
     <div className='w-full min-h-screen flex flex-col space-y-2 items-center justify-center'>
-      <div className='relative w-[20vw] aspect-square'>
+      <div className='relative w-[50vw] md:w-[20vw] aspect-square'>
         <Image
           src={"/images/error.png"}
           alt='something went wrong'

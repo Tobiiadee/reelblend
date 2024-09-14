@@ -8,6 +8,7 @@ import React from "react";
 import Drawer from "./drawer";
 import SearchComp from "@/modules/common/components/search-comp";
 import { Text } from "@/modules/common/components/text";
+import MobileSelectType from "./mobile-select-type";
 
 export default function MobileSearch() {
   const { triggerRef, openDrawer } = useOpenDrawer();
@@ -23,7 +24,7 @@ export default function MobileSearch() {
         </div>
       </Button>
 
-      <Drawer side={"left"} triggerRef={triggerRef} title='Search for a movie'>
+      <Drawer side={"left"} triggerRef={triggerRef} optionalComponent={<MobileSelectType/>} title='Search for a movie'>
         <SearchComp />
       </Drawer>
     </>

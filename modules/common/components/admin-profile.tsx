@@ -21,7 +21,7 @@ export default function AdminProfile() {
             src={"/images/profile.jpg"}
             alt=''
             className='object-cover'
-            layout='fill'
+            fill
             priority
           />
         </div>

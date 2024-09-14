@@ -13,6 +13,7 @@ import SearchMovieResults from "@/modules/common/components/search-movie-results
 import { Button } from "@/modules/common/ui/button";
 import { Menu } from "lucide-react";
 import MobileDrawer from "@/modules/common/components/mobile-drawer";
+import Logo from "@/modules/common/ui/logo";
 
 export default function TopBar() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -26,6 +27,24 @@ export default function TopBar() {
     searchRef.current.click();
     // console.log(searchRef.current);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check if 'Ctrl + K' is pressed
+      if (event.ctrlKey && event.key === "k") {
+        event.preventDefault(); // Prevent default behavior
+        setOpenSearch(true); // Open the search bar
+      }
+    };
+
+    // Attach the event listener for keydown
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,11 +79,7 @@ export default function TopBar() {
             className='px-2 md:hidden'>
             <Menu strokeWidth={1.5} />
           </Button>
-          <Link href={"/"}>
-            <Text variant={"h3"} className='text-foreground font-serif'>
-              ReelBlend
-            </Text>
-          </Link>
+          <Logo/>
         </div>
 
         <div className='w-full max-w-[40vw] flex justify-end md:justify-center'>

@@ -33,6 +33,7 @@ export default function Upcoming() {
             title={movie.title}
             rating={movie.vote_average}
             posterPath={movie.poster_path}
+            type="movie"
           />
         ))}
       </div>

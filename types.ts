@@ -63,12 +63,62 @@ type tmdbSeriesResponse = {
   vote_average: number;
   vote_count: number;
   popularity: number;
-  [key: string]: any; 
-}
+  number_of_seasons: number;
+  [key: string]: any;
+};
 
 interface tmdbSeriesResultResponse {
   page: number;
   results: tmdbSeriesResponse[];
   total_pages: number;
   total_results: number;
+}
+
+interface tmdbMovieDetialsType {
+  [key: string]: any;
+  backdrop_path: string;
+  id: number;
+  imdb_id: string;
+  homepage: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  original_language: string;
+  release_date: string;
+  runtime: number;
+  vote_average: number;
+  vote_count: number;
+  genres: [{ id: number; name: string }];
+}
+
+interface DetailsProps {
+  details: tmdbMovieDetialsType;
+}
+
+interface tmdbSeriesDetailsType {
+  id: number;
+  backdrop_path: string;
+  episode_run_time: number[];
+  first_air_date: string;
+  genre: [{ id: number; name: string }];
+  homepage: string;
+  language: string;
+  last_air_date: string;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  seasons: any[];
+  vote_average: number;
+  vote_count: number;
+  tagline: string;
+}
+
+
+interface SearchResultsType {
+  page: number;
+  results: {id: number, name: string}[]
 }

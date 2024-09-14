@@ -35,13 +35,13 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
         <div className='w-full min-h-full mt-8 flex flex-col justify-between items-center'>
           <div className='flex flex-col items-center space-y-8'>
           <SheetClose asChild>
-              <Link href={"/movies?page=1"}>
+              <Link href={"/all_movies?page=1"}>
                 <Text variant={"p"}>Movies</Text>
               </Link>
             </SheetClose>
 
             <SheetClose asChild>
-              <Link href={"/series?page=1"}>
+              <Link href={"/all_series?page=1"}>
                 <Text variant={"p"}>Series</Text>
               </Link>
             </SheetClose>

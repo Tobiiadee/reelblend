@@ -8,7 +8,10 @@ import useScroll from "@/hooks/use-scroll";
 import { Button } from "@/modules/common/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { getNowPlayingMovies, getTopRatedMovies } from "@/lib/services/tmdb-services";
+import {
+  getNowPlayingMovies,
+  getTopRatedMovies,
+} from "@/lib/services/tmdb-services";
 import MovieCard from "./movie-card";
 import MovieSkeleton from "@/modules/common/components/movie-skeleton";
 
@@ -55,6 +58,7 @@ export default function NowPlayingMovies() {
               posterPath={movie.poster_path}
               title={movie.title}
               rating={movie.vote_average}
+              type='movie'
             />
           ))}
         </div>

@@ -2,17 +2,24 @@
 
 export function convertDate(dateString: string) {
   // Check if dateString is defined and is a string
-  if (!dateString || typeof dateString !== "string") {
-    console.error("Invalid date string:", dateString);
-    return null;
-  }
+  const parsedDate = new Date(dateString);
+  let convertedDate;
 
-  const [year, month, day] = dateString.split("-");
-  return {
-    year: parseInt(year, 10),
-    month: parseInt(month, 10),
-    day: parseInt(day, 10),
-  };
+  if (!isNaN(parsedDate.getTime())) {
+    // Check if the date is valid
+    const movieYear = parsedDate.getFullYear();
+
+    return movieYear; // Output: 2023
+  } else {
+    // console.log("Invalid date string");
+  }
+}
+
+export function convertToHoursAndMinutes(minutes: number): string {
+  const hours = Math.floor(minutes / 60); // Get the whole number of hours
+  const mins = minutes % 60;              // Get the remaining minutes
+
+  return `${hours}hr ${mins}mins`;
 }
 
 interface PaginationResult {
@@ -38,6 +45,10 @@ export function getPaginationPages(
   }
 
   return { startPage, endPage, pagesToShow };
+}
+
+export function modTitle(title: string) {
+  return title.replace(/\s+/g, "_");
 }
 
 // // Example usage:

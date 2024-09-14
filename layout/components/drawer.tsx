@@ -17,7 +17,8 @@ interface DrawerProps {
   children?: React.ReactNode;
   title?: string;
   description?: string;
-  side: "top" | "bottom" | "left" | "right" | null | undefined
+  side: "top" | "bottom" | "left" | "right" | null | undefined;
+  optionalComponent?: React.ReactNode
 }
 
 export default function Drawer({
@@ -26,6 +27,7 @@ export default function Drawer({
   title,
   description,
   side,
+  optionalComponent
 }: DrawerProps) {
   return (
     <Sheet>
@@ -34,7 +36,8 @@ export default function Drawer({
       </SheetTrigger>
       <SheetContent side={side} className='w-screen md:w-96 pb-14'>
         <SheetHeader>
-          {title && <SheetTitle>{title}</SheetTitle>}
+          {optionalComponent}
+          {title && !optionalComponent && <SheetTitle>{title}</SheetTitle>}
           {description && <SheetDescription>{description}</SheetDescription>}
         </SheetHeader>
         <div className='mt-10 h-full'>{children}</div>
