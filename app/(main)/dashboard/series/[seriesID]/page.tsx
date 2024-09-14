@@ -1,6 +1,6 @@
 /** @format */
 
-import { getSeriesDetails, getSeriesIds } from "@/lib/services/tmdb-services";
+import { getSeriesDetails } from "@/lib/services/tmdb-services";
 import DashboardSeriesDetails from "@/modules/common/components/dashboard-series-details";
 import SeriesDashboardVideo from "@/modules/common/components/series-dashboard-video";
 import React from "react";
@@ -27,11 +27,11 @@ export default async function SeriesDashboard({
   );
 }
 
-export async function generateStaticParams() {
-  const ids = await getSeriesIds();
+// export async function generateStaticParams() {
+//   const ids = await getSeriesIds();
 
-  return ids?.map((id) => ({ movieId: id }));
-}
+//   return ids?.map((id) => ({ movieId: id }));
+// }
 
 // export const getStaticProps = async () => {
 //   const movieDetails = getMovieDetails();
