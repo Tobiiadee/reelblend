@@ -1,7 +1,7 @@
 /** @format */
-"use client"
+"use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import {
@@ -17,29 +17,44 @@ interface SideBarButtonProps {
   children: ReactNode;
   path: string;
   toolTipContent: string;
-  target?: boolean
+  target?: boolean;
 }
 
 export default function SidebarButton({
   children,
   path,
   toolTipContent,
-  target
+  target,
 }: SideBarButtonProps) {
+  const [isPath, setIsPath] = useState(false);
 
-    const pathname = usePathname()
-    const isActive = pathname === path
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath === path) setIsPath(true);
+  }, []);
+
+  // const pathname = usePathname();
+  // const isActive = pathname === path;
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Button asChild variant={"ghost"} className='rounded-full px-4 py-7'>
-            <Link href={path} target={target ? "blank" : undefined} className={`${isActive ? "text-foreground" : ""}`}>{children}</Link>
+          <Button
+            asChild
+            variant={"ghost"}
+            className={`rounded-full px-4 py-[26px] ${
+              isPath ? "bg-accent" : ""
+            }`}>
+            <Link href={path} target={target ? "blank" : undefined}>
+              {children}
+            </Link>
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <Text variant={"p"} className="text-[10px] font-meduim capitalize">{toolTipContent}</Text>
+          <Text variant={"p"} className='text-[10px] font-meduim capitalize'>
+            {toolTipContent}
+          </Text>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

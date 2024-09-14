@@ -43,11 +43,9 @@ export default function TopBarSearchComp({
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    if (typeof window !== "undefined") {
-      setIsDashboardSeriesPath(
-        currentPath.includes(`/dashboard/${"movies" || "series"}`)
-      );
-    }
+    setIsDashboardSeriesPath(
+      currentPath.includes("/dashboard/movies") || currentPath.includes("/dashboard/series")
+    );
   }, []);
 
   useEffect(() => {
