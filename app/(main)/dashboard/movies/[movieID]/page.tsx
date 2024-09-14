@@ -1,21 +1,9 @@
 /** @format */
 
-import { getMovieDetails, getMovieIds } from "@/lib/services/tmdb-services";
+import { getMovieDetails } from "@/lib/services/tmdb-services";
 import DashboardMovieDetails from "@/modules/common/components/dashboard-movie-details";
 import MovieDashboardVideo from "@/modules/common/components/movie-dashboard-video";
 import React from "react";
-
-
-// interface MovieDashboardProps {
-//   params: {
-//     movieId: string;
-//   };
-//   searchParams: {
-//     title?: string;
-//   };
-// }
-
-
 
 export default async function MovieDashboard({
   params,
@@ -37,11 +25,11 @@ export default async function MovieDashboard({
   );
 }
 
-export async function generateStaticParams() {
-  const ids = await getMovieIds();
+// export async function generateStaticParams() {
+//   const ids = await getMovieIds();
 
-  return ids?.map((id) => ({ movieId: id }));
-}
+//   return ids?.map((id) => ({ movieId: id }));
+// }
 
 // export const getStaticProps = async () => {
 //   const movieDetails = getMovieDetails();
