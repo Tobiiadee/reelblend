@@ -69,7 +69,7 @@ export default function SearchMovieInput({
   });
 
   const searchHandler = () => {
-    router.push(`./search?type=${typeState}?keyword=${keyword}`);
+    router.push(`/search?type=${typeState}?keyword=${keyword}`);
     setSearch(false);
   };
 
@@ -117,8 +117,8 @@ export default function SearchMovieInput({
 
             <div className='w-full'>
               <Text variant={"p"} className='italic font-medium'>
-                For better search results, ensure you&#39;re on the right tab. e.g
-                &#39;{typeState}&#39;
+                For better search results, ensure you&#39;re on the right tab.
+                e.g &#39;{typeState}&#39;
               </Text>
             </div>
 

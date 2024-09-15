@@ -39,7 +39,7 @@ export default function SearchComp() {
   });
 
   const searchHandler = () => {
-    router.push(`./search?type=${typeState}?keyword=${keyword}`);
+    router.push(`/search?type=${typeState}?keyword=${keyword}`);
     if (!closeRef.current) return;
     closeRef.current.click();
   };
