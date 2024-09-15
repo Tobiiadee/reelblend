@@ -3,7 +3,6 @@
 import React, { useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
-import SearchMovieResultsMobile from "./search-movie-results-mobile";
 import { useRouter } from "next/navigation";
 import { SheetClose } from "../ui/sheet";
 import { debounce } from "lodash";
@@ -23,7 +22,7 @@ export default function SearchComp() {
   // Debounce search input to reduce API calls
   const debouncedSearchKeyWord = debounce((value: string) => {
     setSearchKeyword(value);
-    setKeyword(searchKeyWord)
+    setKeyword(value)
   }, 500);
 
   const type = typeState === "series" ? "tv" : "movie";
