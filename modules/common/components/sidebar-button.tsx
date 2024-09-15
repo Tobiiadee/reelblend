@@ -11,7 +11,6 @@ import {
   TooltipTrigger,
 } from "@/modules/common/ui/tooltip";
 import { Text } from "./text";
-import { usePathname } from "next/navigation";
 
 interface SideBarButtonProps {
   children: ReactNode;

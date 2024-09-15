@@ -18,11 +18,12 @@ export default function SearchComp() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const [searchKeyWord, setSearchKeyword] = useState<string>("");
   const { typeState } = useTypeStateStore();
-  const { keyword } = useKeywordStore();
+  const { keyword, setKeyword } = useKeywordStore();
 
   // Debounce search input to reduce API calls
   const debouncedSearchKeyWord = debounce((value: string) => {
     setSearchKeyword(value);
+    setKeyword(searchKeyWord)
   }, 500);
 
   const type = typeState === "series" ? "tv" : "movie";
@@ -71,7 +72,7 @@ export default function SearchComp() {
       </div>
       <div className='w-full'>
         <Text variant={"p"} className='italic font-medium'>
-          For better search results, ensure you're on the right tab. e.g &#39;
+          For better search results, ensure you&#39;re on the right tab. e.g &#39;
           {typeState}&#39;
         </Text>
       </div>
