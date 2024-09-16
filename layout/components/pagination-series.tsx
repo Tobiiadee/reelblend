@@ -7,14 +7,14 @@ import React from "react";
 import MovieCard from "./movie-card";
 import { useQuery } from "@tanstack/react-query";
 import { getAllSeriesPage } from "@/lib/services/tmdb-services";
-import usePaginationStore from "@/modules/store/pagination-store";
+import usePaginationStoreSeries from "@/modules/store/pagination-store-series";
 
 export default function PaginationSeries() {
 
-    const { pageNumber } = usePaginationStore();
+    const { pageNumber } = usePaginationStoreSeries();
 
   const { data: series, isLoading } = useQuery({
-    queryKey: ["movies", pageNumber],
+    queryKey: ["series", pageNumber],
     queryFn: () => getAllSeriesPage(pageNumber),
   });
 

@@ -12,11 +12,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/modules/common/ui/pagination";
-import usePaginationStore from "@/modules/store/pagination-store";
 import { getPaginationPages } from "@/lib/helpers/helpers";
 import { useRouter, useSearchParams } from "next/navigation"; // Import router for programmatic navigation
 import { useQuery } from "@tanstack/react-query";
-import { getAllMovies, getAllSeries } from "@/lib/services/tmdb-services";
+import { getAllSeries } from "@/lib/services/tmdb-services";
+import usePaginationStoreSeries from "@/modules/store/pagination-store-series";
 
 interface PaginationProps {
   totalPages?: number;
@@ -29,7 +29,8 @@ export default function SeriesPaginationNav() {
   });
 
   const totalPages = allSeries?.total_pages;
-  const { setPageNumber, pageNumber } = usePaginationStore();
+  const { setSeriesPageNumber: setPageNumber, pageNumber } =
+    usePaginationStoreSeries();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,7 +42,7 @@ export default function SeriesPaginationNav() {
     <div className='mt-16'>
       <Pagination>
         <PaginationContent>
-          <PaginationItem className="cursor-pointer">
+          <PaginationItem className='cursor-pointer'>
             <PaginationPrevious
               onClick={() => {
                 setPageNumber(pageNumber - 1);
@@ -68,11 +69,11 @@ export default function SeriesPaginationNav() {
               </PaginationItem>
             ))}
 
-          <PaginationItem>
+          {/* <PaginationItem>
             <PaginationEllipsis />
-          </PaginationItem>
+          </PaginationItem> */}
 
-          <PaginationItem className="cursor-pointer">
+          <PaginationItem className='cursor-pointer'>
             <PaginationNext
               onClick={() => {
                 setPageNumber(pageNumber + 1);

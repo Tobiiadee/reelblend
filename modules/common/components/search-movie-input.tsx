@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import { Variants, motion } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Text } from "./text";
 import Modal from "../ui/modal";
 import { useQuery } from "@tanstack/react-query";
@@ -49,10 +49,12 @@ export default function SearchMovieInput({
       }
     }
   }, []);
+
   // Debounce search input to reduce API calls
   const debouncedSearchKeyWord = debounce((value: string) => {
-    setSearchKeyword(value);
-    setKeyword(value);
+    if (value === "") return;
+    setSearchKeyword(value.trim());
+    setKeyword(value.trim());
   }, 500);
 
   const type = typeState === "series" ? "tv" : "movie";
@@ -79,10 +81,6 @@ export default function SearchMovieInput({
     setSearch(false);
   };
 
-  // const onClickResultHandler = () => {
-  //   set
-  // }
-
   return (
     <>
       {search && (
@@ -104,6 +102,7 @@ export default function SearchMovieInput({
               />
               <Button
                 onClick={searchHandler}
+                disabled={searchKeyWord === "" || !searchResults?.results?.length}
                 variant={"ghost"}
                 className='rounded-full py-2.5 px-2.5'
                 aria-label='Search button'>

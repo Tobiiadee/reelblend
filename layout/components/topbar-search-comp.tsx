@@ -10,7 +10,7 @@ import { motion, Variants } from "framer-motion";
 import useTypeStateStore from "@/modules/store/set-type-store";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import usePaginationStore from "@/modules/store/pagination-store";
+import usePaginationStoreMovies from "@/modules/store/pagination-store-movies";
 
 
 
@@ -37,7 +37,7 @@ export default function TopBarSearchComp({
   const { setTypeState, typeState } = useTypeStateStore();
   const path = usePathname();
   const router = useRouter();
-  const { pageNumber } = usePaginationStore();
+  const { pageNumber } = usePaginationStoreMovies();
 
   const [isDashboardSeriesPath, setIsDashboardSeriesPath] = useState(false);
 

@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
 } from "@/modules/common/ui/tooltip";
 import { toast } from "sonner";
+import useWatchlistStore from "@/modules/store/watchlist-store";
 
 interface MovieCardProps {
   posterPath: string;
@@ -25,9 +26,11 @@ interface MovieCardProps {
   id: number;
   rating: number;
   type: "movie" | "series";
+  isWatchlist?: boolean;
 }
 
 export default function MovieCard({
+  isWatchlist,
   posterPath,
   rating,
   title,
@@ -36,16 +39,20 @@ export default function MovieCard({
   type,
 }: MovieCardProps) {
   const [fav, setFav] = useState(false);
-
-  // const movieTitle = modTitle(title);
+  const [addWatchlist, setAddWatchlist] = useState(false);
+  const { addToWatchlist } = useWatchlistStore();
 
   const onClickFav = () => setFav((prev) => !prev);
   const movieYear = convertDate(year as string);
   const movieRating =
     typeof rating === "number" && !isNaN(rating) ? rating.toFixed(1) : "N/A";
 
-  if (fav === true) toast.success("Movie added to watchlist");
+  if (addWatchlist) toast.success("Movie added to watchlist");
 
+  const setWatchlistHandler = () => {
+    addToWatchlist({id, title})
+    setAddWatchlist(prev => !prev)
+  };
   return (
     <div className='w-full relative group'>
       <div className='flex flex-col w-full min-w-[300px] md:min-w-[280px] lg:min-w-[220px] aspect-video  space-y-1 transition duration-200'>
@@ -91,7 +98,11 @@ export default function MovieCard({
             </div>
           </div>
 
-          <FavButton onClickFav={onClickFav} fav={fav} />
+          <FavButton
+            onClickFav={setWatchlistHandler}
+            fav={fav}
+            isWatchlist={addWatchlist}
+          />
         </div>
       </div>
     </div>
@@ -99,11 +110,13 @@ export default function MovieCard({
 }
 
 function FavButton({
+  isWatchlist,
   onClickFav,
   fav,
 }: {
   onClickFav: () => void;
   fav: boolean;
+  isWatchlist?: boolean;
 }) {
   return (
     <TooltipProvider>
@@ -117,7 +130,7 @@ function FavButton({
               size={20}
               strokeWidth={1}
               color='#f84531'
-              fill={fav ? "#f84531" : "transparent"}
+              fill={isWatchlist ? "#f84531" : "transparent"}
             />
           </Button>
         </TooltipTrigger>
@@ -128,7 +141,7 @@ function FavButton({
             </Text>
           ) : (
             <Text variant={"p"} className='text-[10px]'>
-              Remove to watchlist
+              Remove from watchlist
             </Text>
           )}
         </TooltipContent>

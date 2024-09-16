@@ -13,8 +13,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/modules/common/ui/dropdown-menu";
+import { cn } from "@/lib/utils"; // Assuming you have a cn utility function
 
-const ToggleTheme = () => {
+interface ToggleThemeProps {
+  className?: string;
+}
+
+const ToggleTheme = ({ className }: ToggleThemeProps) => {
   const { setTheme, theme } = useTheme();
   const [darkMode, setDarkMode] = React.useState(false);
 
@@ -26,15 +31,19 @@ const ToggleTheme = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant='ghost'
-          className='border-none focus:border-none'
-          size='icon'>
-          <SunIcon className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
-          <MoonIcon className='absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
-          <span className='sr-only'>Toggle theme</span>
+          variant="ghost"
+          className="border-none focus:border-none"
+          size="icon"
+        >
+          <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='center' className="absolute left-6 bottom-6">
+      <DropdownMenuContent
+        align="center"
+        className={cn("absolute", className)}
+      >
         <DropdownMenuItem onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>
@@ -48,4 +57,5 @@ const ToggleTheme = () => {
     </DropdownMenu>
   );
 };
+
 export default ToggleTheme;

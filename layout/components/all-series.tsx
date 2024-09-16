@@ -32,14 +32,6 @@ export default function AllSeries() {
         <Text variant='h3' className='font-bold'>
           All Series
         </Text>
-
-        <Button asChild variant='link'>
-          <Link href='/all_series?page=1'>
-            <Text variant='p' className='font-medium'>
-              View All
-            </Text>
-          </Link>
-        </Button>
       </div>
 
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full md:pl-6'>
@@ -72,6 +64,19 @@ export default function AllSeries() {
             No series available.
           </Text>
         )}
+      </div>
+
+      <div className='w-full flex items-center justify-center mt-8'>
+        <Button
+          asChild
+          variant='ghost'
+          className='bg-foreground/10 py-5 rounded-2xl'>
+          <Link href='/all_series?page=2'>
+            <Text variant='p' className='font-medium'>
+              Load more series
+            </Text>
+          </Link>
+        </Button>
       </div>
     </div>
   );

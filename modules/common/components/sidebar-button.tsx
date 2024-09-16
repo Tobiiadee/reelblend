@@ -1,7 +1,7 @@
 /** @format */
 "use client";
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import {
@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/modules/common/ui/tooltip";
 import { Text } from "./text";
+import { usePathname } from "next/navigation";
 
 interface SideBarButtonProps {
   children: ReactNode;
@@ -25,15 +26,9 @@ export default function SidebarButton({
   toolTipContent,
   target,
 }: SideBarButtonProps) {
-  const [isPath, setIsPath] = useState(false);
 
-  useEffect(() => {
-    const currentPath = window.location.pathname;
-    if (currentPath === path) setIsPath(true);
-  }, []);
-
-  // const pathname = usePathname();
-  // const isActive = pathname === path;
+  const pathname = usePathname();
+  const isActive = pathname === path;
 
   return (
     <TooltipProvider>
@@ -43,7 +38,7 @@ export default function SidebarButton({
             asChild
             variant={"ghost"}
             className={`rounded-full px-4 py-[26px] ${
-              isPath ? "bg-accent" : ""
+              isActive ? "bg-accent" : ""
             }`}>
             <Link href={path} target={target ? "blank" : undefined}>
               {children}

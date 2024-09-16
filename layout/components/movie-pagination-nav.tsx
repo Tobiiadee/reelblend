@@ -12,7 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/modules/common/ui/pagination";
-import usePaginationStore from "@/modules/store/pagination-store";
+import usePaginationStoreMovies from "@/modules/store/pagination-store-movies";
 import { getPaginationPages } from "@/lib/helpers/helpers";
 import { useRouter, useSearchParams } from "next/navigation"; // Import router for programmatic navigation
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +29,7 @@ export default function MoviePaginationNav() {
   });
 
   const totalPages = allMovies?.total_pages;
-  const { setPageNumber, pageNumber } = usePaginationStore();
+  const { setMoviesPageNumber: setPageNumber, pageNumber } = usePaginationStoreMovies();
 
   const router = useRouter();
   
@@ -69,9 +69,9 @@ export default function MoviePaginationNav() {
               </PaginationItem>
             ))}
 
-          <PaginationItem>
+          {/* <PaginationItem>
             <PaginationEllipsis />
-          </PaginationItem>
+          </PaginationItem> */}
 
           <PaginationItem className='cursor-pointer'>
             <PaginationNext

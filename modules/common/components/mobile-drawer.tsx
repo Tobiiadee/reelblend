@@ -16,7 +16,7 @@ import { Text } from "./text";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import useTypeStateStore from "@/modules/store/set-type-store";
-import usePaginationStore from "@/modules/store/pagination-store";
+import usePaginationStoreMovies from "@/modules/store/pagination-store-movies";
 import { usePathname } from "next/navigation";
 
 interface MobileDrawerProps {
@@ -27,7 +27,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
   const router = useRouter();
   const path = usePathname();
   const { typeState, setTypeState } = useTypeStateStore();
-  const { pageNumber } = usePaginationStore();
+  const { pageNumber } = usePaginationStoreMovies();
 
   useEffect(() => {
     const redirectTo = (target: string) => {
@@ -60,7 +60,20 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
           </SheetDescription>
         </SheetHeader>
         <div className='w-full min-h-full mt-8 flex flex-col justify-between items-center'>
-          <div className='flex flex-col items-center space-y-8'>
+          <div className='flex flex-col items-center space-y-4'>
+            <SheetClose asChild>
+              <Link href={"/sign-in"}>
+                <Text variant={"p"}>Sign in</Text>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={"/sign-up"}>
+                <Text variant={"p"}>Sign up</Text>
+              </Link>
+            </SheetClose>
+          </div>
+
+          <div className='flex flex-col items-center space-y-4'>
             <SheetClose
               asChild
               onClick={() => setTypeState("movies")}
@@ -75,7 +88,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
               <Text variant={"p"}>Series</Text>
             </SheetClose>
           </div>
-          <div className='flex flex-col items-center space-y-8'>
+          <div className='flex flex-col items-center space-y-4'>
             <SheetClose asChild>
               <Link href={"/"}>
                 <Text variant={"p"}>Home</Text>

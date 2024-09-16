@@ -28,10 +28,10 @@ export default function SeriesDashboardVideo({
           priority
         />
       </div>
-      <div className='absolute w-full h-full top-0 left-0 flex flex-col justify-between bg-gradient-to-b from-black/5 to-black/80'>
+      {/* <div className='absolute w-full h-full top-0 left-0 flex flex-col justify-between bg-gradient-to-b from-black/5 to-black/80'>
         <div></div>
-        {/* <DashboardVideoMbtn /> */}
-      </div>
+        <DashboardVideoMbtn />
+      </div> */}
     </div>
   );
 }

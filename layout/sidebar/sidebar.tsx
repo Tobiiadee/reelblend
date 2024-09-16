@@ -22,7 +22,7 @@ export default function SideBar() {
         <SidebarButton path='/' toolTipContent='Home'>
           <House size={22} strokeWidth={1.5} />
         </SidebarButton>
-        <SidebarButton path='' toolTipContent='watchlist'>
+        <SidebarButton path='/watchlist' toolTipContent='watchlist'>
           <Presentation size={22} strokeWidth={1.5} />
         </SidebarButton>
         <SidebarButton path='' toolTipContent='favourite'>
@@ -36,7 +36,7 @@ export default function SideBar() {
         </SidebarButton>
       </div>
       <div>
-        <ToggleTheme />
+        <ToggleTheme className="left-6 bottom-6" />
       </div>
     </div>
   );

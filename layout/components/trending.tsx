@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getTrendingMovies } from "@/lib/services/tmdb-services";
 import MovieSkeleton from "@/modules/common/components/movie-skeleton";
 import EmptyStateError from "@/modules/common/ui/empty-states/empty-state-error";
+import { notFound } from "next/navigation";
 
 export default function Trending() {
   const { showLeft, showRight, scrollLeft, scrollRight, scrollRef } =
@@ -21,13 +22,14 @@ export default function Trending() {
     data: trendingMovies,
     isLoading,
     error,
+    isError,
   } = useQuery({
     queryKey: ["trending-movies"],
     queryFn: getTrendingMovies,
   });
 
-  if (error) {
-    return <EmptyStateError />;
+  if (!trendingMovies && isError) {
+    return notFound();
   }
 
   return (
@@ -54,6 +56,7 @@ export default function Trending() {
           ref={scrollRef}
           id='hide-scrollbar'
           className='flex space-x-4 overflow-y-scroll scrollbar-hide'>
+          {!isLoading && !trendingMovies ? notFound() : null}
           {isLoading
             ? Array.from({ length: 10 }).map((_, index) => (
                 <MovieSkeleton key={index} />

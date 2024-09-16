@@ -21,8 +21,8 @@ export default function SearchComp() {
 
   // Debounce search input to reduce API calls
   const debouncedSearchKeyWord = debounce((value: string) => {
-    setSearchKeyword(value);
-    setKeyword(value)
+    setSearchKeyword(value.trim());
+    setKeyword(value.trim());
   }, 500);
 
   const type = typeState === "series" ? "tv" : "movie";
@@ -60,6 +60,7 @@ export default function SearchComp() {
         />
         <Button
           onClick={searchHandler}
+          disabled={searchKeyWord === "" || !searchResults?.results?.length}
           variant={"link"}
           className='rounded-full group text-foreground py-2.5 px-2.5'>
           <Search
@@ -71,7 +72,8 @@ export default function SearchComp() {
       </div>
       <div className='w-full'>
         <Text variant={"p"} className='italic font-medium'>
-          For better search results, ensure you&#39;re on the right tab. e.g &#39;
+          For better search results, ensure you&#39;re on the right tab. e.g
+          &#39;
           {typeState}&#39;
         </Text>
       </div>

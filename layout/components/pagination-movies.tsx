@@ -5,13 +5,13 @@ import React from "react";
 import MovieCard from "./movie-card";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMoviesPage } from "@/lib/services/tmdb-services";
-import usePaginationStore from "@/modules/store/pagination-store";
+import usePaginationStoreMovies from "@/modules/store/pagination-store-movies";
 import { Text } from "@/modules/common/components/text";
 import { notFound } from "next/navigation";
 import EmptyStateError from "@/modules/common/ui/empty-states/empty-state-error";
 
 export default function PaginationMovies() {
-  const { pageNumber } = usePaginationStore();
+  const { pageNumber } = usePaginationStoreMovies();
 
   const {
     data: movies,
