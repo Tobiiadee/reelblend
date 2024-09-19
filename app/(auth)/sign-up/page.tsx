@@ -15,7 +15,7 @@ export default function SignUp() {
   const router = useRouter();
 
   return (
-    <div className='h-[90vh] w-full'>
+    <div className='h-full w-full'>
       <div className='w-full h-max flex items-center justify-between px-6 py-2'>
         <Button
           onClick={() => router.back()}

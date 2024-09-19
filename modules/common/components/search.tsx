@@ -21,19 +21,20 @@ export default function TopBarSearch({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Button
+          <div
             onClick={searchAction}
-            variant={"ghost"}
-            className={`rounded-full text-foreground group bg-background hover:text-foreground px-[0.7rem]`}>
+            className={`rounded-full text-foreground group bg-background hover:text-foreground p-3`}>
             <Search
               size={15}
               strokeWidth={3}
               className='group-active:active:scale-90 transition-all duration-300'
             />
-          </Button>
+          </div>
         </TooltipTrigger>
         <TooltipContent>
-          <Text variant={"p"} className="text-[10px]">CTRL + K</Text>
+          <Text variant={"p"} className='text-[10px]'>
+            CTRL + K
+          </Text>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

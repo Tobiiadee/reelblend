@@ -117,8 +117,13 @@ interface tmdbSeriesDetailsType {
   tagline: string;
 }
 
-
 interface SearchResultsType {
   page: number;
-  results: {id: number, name: string}[]
+  results: { id: number; name: string }[];
+}
+
+interface watchlistType {
+  id: number;
+  title: string;
+  type: "series" | "movie";
 }

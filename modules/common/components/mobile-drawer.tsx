@@ -96,7 +96,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
             </SheetClose>
 
             <SheetClose asChild>
-              <Link href={"/"}>
+              <Link href={"/watchlist"}>
                 <Text variant={"p"}>Watchlist</Text>
               </Link>
             </SheetClose>

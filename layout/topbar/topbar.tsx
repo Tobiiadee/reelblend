@@ -14,12 +14,19 @@ import { Button } from "@/modules/common/ui/button";
 import { Menu } from "lucide-react";
 import MobileDrawer from "@/modules/common/components/mobile-drawer";
 import Logo from "@/modules/common/ui/logo";
+import SignInSlide from "../components/sign-in-slide";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/config";
 
 export default function TopBar() {
   const [openSearch, setOpenSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const searchRef = useRef<HTMLButtonElement>(null);
   const mobileDrawerRef = useRef<HTMLButtonElement>(null);
+
+  const [userOnAuth, setUserOnAuth] = useState(false);
+
+  const [user] = useAuthState(auth);
 
   const openSearchHandler = () => {
     setOpenSearch((prev) => !prev);
@@ -61,6 +68,31 @@ export default function TopBar() {
     };
   }, []);
 
+  useEffect(() => {
+    // Wait for Firebase auth to ensure the user is available
+    const waitForAuth = () =>
+      new Promise<void>((resolve, reject) => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          if (user) {
+            resolve();
+          } else {
+            reject(new Error("User not authenticated"));
+          }
+          unsubscribe(); // Clean up the listener
+        });
+      });
+
+    waitForAuth();
+
+    // const user = auth.currentUser;
+
+    if (!user) {
+      setUserOnAuth(true);
+    } else {
+      setUserOnAuth(false);
+    }
+  }, [user]);
+
   const mobileDrawerHandler = () => {
     if (!mobileDrawerRef.current) return;
     mobileDrawerRef.current.click();
@@ -79,7 +111,7 @@ export default function TopBar() {
             className='px-2 md:hidden'>
             <Menu strokeWidth={1.5} />
           </Button>
-          <Logo/>
+          <Logo />
         </div>
 
         <div className='w-full max-w-[40vw] flex justify-end md:justify-center'>
@@ -101,8 +133,16 @@ export default function TopBar() {
         <TopBarAdmin />
 
         <MobileDrawer trigger={mobileDrawerRef} />
+
+        {userOnAuth && (
+          <AnimatePresence mode='wait'>
+            <SignInSlide setSlider={setUserOnAuth} />
+          </AnimatePresence>
+        )}
       </div>
-      {openSearch && <SearchMovieInput search={openSearch} setSearch={setOpenSearch} />}
+      {openSearch && (
+        <SearchMovieInput search={openSearch} setSearch={setOpenSearch} />
+      )}
     </>
   );
 }

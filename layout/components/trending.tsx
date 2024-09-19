@@ -2,7 +2,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Text } from "@/modules/common/components/text";
 import MovieCard from "./movie-card";
 import { Button } from "@/modules/common/ui/button";
@@ -13,10 +13,12 @@ import { getTrendingMovies } from "@/lib/services/tmdb-services";
 import MovieSkeleton from "@/modules/common/components/movie-skeleton";
 import EmptyStateError from "@/modules/common/ui/empty-states/empty-state-error";
 import { notFound } from "next/navigation";
+import WatchlistStateType from "@/modules/store/check-watchlist-store";
 
 export default function Trending() {
   const { showLeft, showRight, scrollLeft, scrollRight, scrollRef } =
     useScroll();
+  // const { setWatchlistIds } = useCheckWatchlist();
 
   const {
     data: trendingMovies,
@@ -27,6 +29,12 @@ export default function Trending() {
     queryKey: ["trending-movies"],
     queryFn: getTrendingMovies,
   });
+
+  // useEffect(() => {
+  //   const ids = trendingMovies?.results.map((movie) => movie.id);
+  //   if (!ids) return;
+  //   setWatchlistIds(ids);
+  // }, [setWatchlistIds, trendingMovies]);
 
   if (!trendingMovies && isError) {
     return notFound();

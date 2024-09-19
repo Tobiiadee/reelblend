@@ -1,5 +1,6 @@
 /** @format */
 
+import getWatchlist from "@/hooks/get-watchlist";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 const tmdbinstance = axios.create({
@@ -294,3 +295,17 @@ export const getSearchedKeyword = async (
     return error.message;
   }
 };
+
+export async function watchlistIds() {
+  try {
+    // Fetch the watchlist asynchronously
+    const watchlist = await getWatchlist();
+
+    // Extract the IDs from the watchlist
+    const watchlistIds = watchlist?.map((item) => item.id);
+
+    return watchlistIds;
+  } catch (error) {
+    console.error("Error fetching watchlist:", error);
+  }
+}

@@ -5,7 +5,7 @@ import { Button } from "@/modules/common/ui/button";
 import Link from "next/link";
 import React from "react";
 
-export default function User() {
+export default function UserAuth() {
   return (
     <div className='hidden md:flex space-x-4 items-center'>
       <Button asChild variant={"ghost"} className='rounded-3xl'>

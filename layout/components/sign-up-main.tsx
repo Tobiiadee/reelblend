@@ -8,11 +8,14 @@ import { Button } from "@/modules/common/ui/button";
 import { Separator } from "@/modules/common/ui/separator";
 import SignUpForm from "./sign-up-form";
 import Link from "next/link";
+import useGoogleSignUp from "@/hooks/use-google-sign-up";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignUpMain() {
   return (
-    <div className='w-full min-h-full grid place-items-center'>
-      <div className='shadow-md rounded-xl bg-foreground/10 backdrop-blur-md w-full md:w-[40vw] h-max px-6 py-6'>
+    <div className='w-full min-h-full grid place-items-center -mt-4'>
+      <div className='shadow-md rounded-xl md:bg-foreground/10 backdrop-blur-md  w-full md:w-[40vw] min-w-[30rem] h-max px-6 py-6'>
         <div className='flex flex-col justify-center'>
           <div className='flex space-x-4 justify-center'>
             <LogoSvg />
@@ -35,7 +38,7 @@ export default function SignUpMain() {
         </div>
         <SignUpForm />
         <div className='mt-4'>
-          <Text variant={"p"} className="text-[14px]">
+          <Text variant={"p"} className='text-[14px]'>
             Already have an account?{" "}
             <Link href={"/sign-in"} className='font-medium'>
               Sign in
@@ -48,9 +51,20 @@ export default function SignUpMain() {
 }
 
 function GoogleSignInButton() {
+  const router = useRouter();
+  const { signUpWithGoogle, isSigningUp, isSignedUp } = useGoogleSignUp();
+
+  if (isSigningUp) {
+    toast.success("Account signed up successfully");
+    router.push("/");
+  }
   return (
     <Button
       variant={"default"}
+      onClick={() => {
+        signUpWithGoogle();
+      }}
+      isLoading={isSigningUp}
       className='w-60 flex space-x-4 items-center justify-center'>
       <GoogleIcon />
       <Text variant={"p"} className='font-medium'>

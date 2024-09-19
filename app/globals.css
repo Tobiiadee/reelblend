@@ -96,8 +96,8 @@
   .middle,
   .inner {
     border: 3px solid transparent;
-    border-top-color: #3cefff;
-    border-right-color: #3cefff;
+    border-top-color: hsl(var(--foreground));
+    border-right-color: hsl(var(--foreground));
     border-radius: 50%;
     position: absolute;
     top: 50%;

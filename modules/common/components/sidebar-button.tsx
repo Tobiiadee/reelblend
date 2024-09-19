@@ -13,7 +13,8 @@ import {
 import { Text } from "./text";
 import { usePathname } from "next/navigation";
 
-interface SideBarButtonProps {
+interface SideBarButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   path: string;
   toolTipContent: string;
@@ -25,8 +26,9 @@ export default function SidebarButton({
   path,
   toolTipContent,
   target,
+  disabled,
+  ...props
 }: SideBarButtonProps) {
-
   const pathname = usePathname();
   const isActive = pathname === path;
 
@@ -35,11 +37,13 @@ export default function SidebarButton({
       <Tooltip>
         <TooltipTrigger>
           <Button
-            asChild
+            asChild={!disabled}
             variant={"ghost"}
             className={`rounded-full px-4 py-[26px] ${
               isActive ? "bg-accent" : ""
-            }`}>
+            }`}
+            disabled={disabled}
+            {...props}>
             <Link href={path} target={target ? "blank" : undefined}>
               {children}
             </Link>

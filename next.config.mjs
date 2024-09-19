@@ -1,10 +1,11 @@
 /**
+ * @format
  * @type {import('next').NextConfig}
  */
 
 const nextConfig = {
   images: {
-    domains: ["image.tmdb.org"], // Allow images from TMDb
+    domains: ["image.tmdb.org", "lh3.googleusercontent.com"], // Allow images from TMDb
   },
 };
 

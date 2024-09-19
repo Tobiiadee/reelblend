@@ -6,6 +6,7 @@ import ScrollUpBtn from "@/modules/common/components/scroll-up-btn";
 import MovieMain from "@/layout/components/movie-main";
 import useTypeStateStore from "@/modules/store/set-type-store";
 import SeriesMain from "@/layout/components/series-main";
+import SignInSlide from "@/layout/components/sign-in-slide";
 
 export default function Home() {
   const { typeState } = useTypeStateStore();
@@ -13,9 +14,11 @@ export default function Home() {
   const active = typeState === "series";
   return (
     <main id='top-one' className='relative pb-24'>
-      <MovieSelect />
+      {/* <MovieSelect /> */}
       {active ? <SeriesMain /> : <MovieMain />}
       <ScrollUpBtn />
+
+      {/* <SignInSlide /> */}
     </main>
   );
 }
