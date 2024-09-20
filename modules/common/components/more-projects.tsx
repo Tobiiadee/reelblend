@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import fetchMorePorjects from "@/lib/services/more-project";
 import { Skeleton } from "../ui/skeleton";
 import { Text } from "./text";
+import Loader from "../ui/loader";
 
 export default function MoreProjects<FirebaseResponse, Error>() {
   const { data: moreProjects, isLoading } = useQuery({
@@ -41,12 +42,13 @@ export default function MoreProjects<FirebaseResponse, Error>() {
             More Projects
           </Text>
         </div>
-        <div className='grid grid-cols-2 gap-2 w-full h-full'>
-          {isLoading &&
-            Array.from({ length: 5 }).map((_, i) => (
-              <MoreProjectItemSkeleton key={i} />
-            ))}
 
+        {isLoading && (
+          <div className='grid place-items-center w-full h-72'>
+            <Loader />
+          </div>
+        )}
+        <div className='grid grid-cols-2 gap-2 w-full h-full'>
           {projects.map((project) => (
             <DropdownMenuItem key={project.id} className='w-max'>
               <MoreProjectItem

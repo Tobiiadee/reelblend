@@ -61,8 +61,6 @@ export default function MovieCard({
   const movieRating =
     typeof rating === "number" && !isNaN(rating) ? rating.toFixed(1) : "N/A";
 
-  if (addWatchlist) toast.success(`${type} added to your watchlist`);
-
   // useEffect(() => {
   //   checkIfInWatchlist(id);
   // }, [id, checkIfInWatchlist]);
@@ -73,10 +71,15 @@ export default function MovieCard({
     if (user) {
       setAddWatchlist((prev) => !prev);
     } else {
-      if (triggerRef.current) triggerRef.current.click();
+      if (triggerRef.current) {
+        triggerRef.current.click();
+        setFav(false);
+      }
       return;
     }
   };
+
+  if (addWatchlist) toast.success(`${type} added to your watchlist`);
 
   return (
     <>
@@ -85,11 +88,15 @@ export default function MovieCard({
           <Link
             href={`/dashboard/${
               type === "series" ? "series" : "movies"
-            }/${id}?title=${encodeURIComponent(title)}`}
+            }/${id}?title=${encodeURI(title)}`}
             className='w-full h-full'>
             <div className='w-full h-full rounded-lg relative overflow-hidden'>
               <Image
-                src={`https://image.tmdb.org/t/p/w500${posterPath}`}
+                src={
+                  posterPath !== null
+                    ? `https://image.tmdb.org/t/p/w500${posterPath}`
+                    : "/images/dummy-flag.png"
+                }
                 alt={`poster for ${title}`}
                 fill
                 className='object-cover'
@@ -146,14 +153,14 @@ function FavButton({
   fav,
   id,
   setFav,
-  type
+  type,
 }: {
   onClickFav: () => void;
   fav: boolean;
   isWatchlist?: boolean;
   id: number;
   setFav: (value: boolean) => void;
-  type: "series" | "movie"
+  type: "series" | "movie";
 }) {
   const { removeDataFromWatchlist, dataSent } = useSendData();
   const { setInWatchlist } = useWatchlistState();
@@ -175,12 +182,10 @@ function FavButton({
     toast.success(`${type} removed from watchlist`);
   }
 
-  console.log("fav", fav);
-  console.log("matched Item", !!matchedItem);
-  
+  // console.log("fav", fav);
+  // console.log("matched Item", !!matchedItem);
 
-  const addFav = fav && !!matchedItem === false
-  
+  const addFav = fav && !!matchedItem === false;
 
   return (
     <>

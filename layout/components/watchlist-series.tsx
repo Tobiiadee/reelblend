@@ -19,7 +19,9 @@ export default function WatchlistSeries({
         Series
       </Text>
 
-      <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full md:pl-6'>
+      <div
+        id='hide-scrollbar'
+        className='flex space-x-1 md:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full md:pl-6 overflow-x-scroll'>
         {isLoading &&
           Array.from({ length: 10 }).map((_, index) => (
             <MovieSkeleton key={index} />

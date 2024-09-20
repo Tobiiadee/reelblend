@@ -15,9 +15,9 @@ export default function AdminProfile() {
 
   return (
     <div className='w-max flex items-center space-x-4 cursor-pointer group hover:bg-transparent'>
-      <div className='rounded-full w-6 md:w-10 aspect-square flex justify-center items-center shadow-md relative overflow-hidden'>
+      <div className='rounded-full w-10 aspect-square flex justify-center items-center shadow-md relative overflow-hidden'>
         <Image
-          src={user?.photoURL as string}
+          src={user?.photoURL !== null ? (user?.photoURL as string) : "/images/dummy.png"}
           alt={`${user?.displayName}'s profile picture`}
           className='object-cover'
           fill
