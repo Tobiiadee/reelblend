@@ -128,7 +128,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
               <Text variant={"p"}>Sign out</Text>
             </SheetClose>
           )}
-          <ToggleTheme />
+          <ToggleTheme className="-top-32 -left-36"/>
         </div>
       </SheetContent>
     </Sheet>

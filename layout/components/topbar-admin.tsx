@@ -7,6 +7,7 @@ import UserAuth from "./user-auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import UserDropdown from "@/modules/common/components/user-dropdown";
+import Image from "next/image";
 
 export default function TopBarAdmin() {
   const [user] = useAuthState(auth);

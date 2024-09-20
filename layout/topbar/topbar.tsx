@@ -17,6 +17,7 @@ import Logo from "@/modules/common/ui/logo";
 import SignInSlide from "../components/sign-in-slide";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
+import Image from "next/image";
 
 export default function TopBar() {
   const [openSearch, setOpenSearch] = useState(false);
