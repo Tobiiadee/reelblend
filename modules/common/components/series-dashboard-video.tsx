@@ -6,16 +6,19 @@ import DashboardVideoNav from "./dashboard-video-nav";
 import Image from "next/image";
 
 interface SeriesDashboardvideoType {
-  details?: tmdbSeriesDetailsType;
+  details: tmdbSeriesDetailsType;
 }
 
 export default function SeriesDashboardVideo({
   details,
 }: SeriesDashboardvideoType) {
   const backdrop =
-    details?.backdrop_path === ""
+    details?.backdrop_path === undefined
       ? details?.poster_path
       : details?.backdrop_path;
+
+      console.log(details);
+      
 
   return (
     <div className='rounded-lg overflow-hidden relative h-[80vh]'>

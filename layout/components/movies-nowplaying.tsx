@@ -3,7 +3,6 @@
 
 import { Text } from "@/modules/common/components/text";
 import React from "react";
-import MovieCard2 from "./movie-card2";
 import useScroll from "@/hooks/use-scroll";
 import { Button } from "@/modules/common/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";

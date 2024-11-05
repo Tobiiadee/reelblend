@@ -11,7 +11,7 @@ import MoreProjects from "@/modules/common/components/more-projects";
 
 export default function SideBar() {
   return (
-    <div className='hidden fixed top-0 left-0 z-30 w-20 h-[100dvh] py-6 shadow-lg rounded-r-xl md:flex flex-col items-center justify-between bg-background'>
+    <div className='hidden fixed top-0 left-0 z-30 w-20 h-[100dvh] py-6 shadow-lg rounded-r-xl lg:flex flex-col items-center justify-between bg-background'>
       <div className='flex flex-col justify-between space-y-6'>
         <MoreProjects />
       </div>

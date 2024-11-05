@@ -21,7 +21,7 @@ export default function MoreProjectItem({
   return (
     <Link
       href={title === "ReelBlend" ? "" : url}
-      target={title === "ReelBlend" ? "" : "blank"}
+      target={title === "ReelBlend" ? "" : "_blank"}
       className='flex flex-col space-y-2 items-center max-w-20'>
       <div className='relative w-10 aspect-square rounded-full grid place-items-center overflow-hidden'>
         <Image

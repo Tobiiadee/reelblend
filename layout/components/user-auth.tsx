@@ -7,7 +7,7 @@ import React from "react";
 
 export default function UserAuth() {
   return (
-    <div className='hidden md:flex space-x-4 items-center'>
+    <div className='hidden lg:flex space-x-4 items-center'>
       <Button asChild variant={"ghost"} className='rounded-3xl'>
         <Link href={"/sign-in"}>
           <Text variant={"p"}>Sign in</Text>

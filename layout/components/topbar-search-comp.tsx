@@ -73,7 +73,7 @@ export default function TopBarSearchComp({
         initial='initial'
         animate='animate'
         exit='exit'
-        className='w-[22rem] hidden md:flex items-center justify-between rounded-3xl bg-foreground pl-3 py-0.5'>
+        className='w-[22rem] hidden lg:flex items-center justify-between rounded-3xl bg-foreground pl-3 py-0.5'>
         <Button
           onClick={() => {
             setTypeState("movies");

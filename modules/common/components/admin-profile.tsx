@@ -3,21 +3,28 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { Text } from "./text";
 import { Button } from "../ui/button";
-import useOpenDrawer from "@/hooks/use-open-drawer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 
 export default function AdminProfile() {
   const [user] = useAuthState(auth);
+  const [profileImage, setProfileImage] =
+    React.useState<string>("/images/dummy.png");
+
+  useEffect(() => {
+    if (user?.photoURL !== null) {
+      setProfileImage(user?.photoURL as string);
+    }
+  }, [user]);
 
   return (
     <div className='w-max flex items-center space-x-4 cursor-pointer group hover:bg-transparent'>
-      <div className='rounded-full w-10 aspect-square flex justify-center items-center shadow-md relative overflow-hidden'>
+      <div className='rounded-full w-10 sm:w-14 aspect-square flex justify-center items-center shadow-md relative overflow-hidden'>
         <Image
-          src={user?.photoURL !== null ? (user?.photoURL as string) : "/images/dummy.png"}
+          src={profileImage}
           alt={`${user?.displayName}'s profile picture`}
           className='object-cover'
           fill

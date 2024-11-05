@@ -21,7 +21,7 @@ export default async function SeriesDashboard({
 
   return (
     <div className='w-full relative flex flex-col space-y-24 mb-10 -mt-6'>
-      <SeriesDashboardVideo />
+      <SeriesDashboardVideo details={seriesDetails}/>
       <DashboardSeriesDetails details={seriesDetails}/>
     </div>
   );

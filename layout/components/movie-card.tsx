@@ -79,7 +79,10 @@ export default function MovieCard({
     }
   };
 
-  if (addWatchlist) toast.success(`${type} added to your watchlist`);
+  if (addWatchlist)
+    toast.success(
+      `${type === "series" ? "Series" : "Movie"} added to your watchlist`
+    );
 
   return (
     <>
@@ -179,19 +182,22 @@ function FavButton({
   };
 
   if (dataSent) {
-    toast.success(`${type} removed from watchlist`);
+    toast.success(
+      `${type === "series" ? "Series" : "Movie"} removed from watchlist`
+    );
   }
 
   // console.log("fav", fav);
   // console.log("matched Item", !!matchedItem);
 
-  const addFav = fav && !!matchedItem === false;
+  const addFav = fav && !!matchedItem && "#f84531";
+  const notFav = !fav && !!matchedItem === false && "transparent";
 
   return (
     <>
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button
               onClick={!!matchedItem ? removeFromWatchlistHandler : onClickFav}
               variant={"ghost"}
@@ -200,7 +206,9 @@ function FavButton({
                 size={20}
                 strokeWidth={1}
                 color='#f84531'
-                fill={fav || !!matchedItem ? "#f84531" : "transparent"}
+                fill={
+                  fav ? "#f84531" : !!matchedItem ? "#f84531" : "transparent"
+                }
               />
             </Button>
           </TooltipTrigger>

@@ -20,7 +20,13 @@ const MovieSrcArray = [
   "/images/v6.jpg",
 ];
 
-export default function RelatedMovies({ movieId, type }: { movieId: number, type: "movie" | "series" }) {
+export default function RelatedMovies({
+  movieId,
+  type,
+}: {
+  movieId: number;
+  type: "movie" | "series";
+}) {
   const { data: relatedMovies } = useQuery({
     queryKey: ["related-movies"],
     queryFn: () => getSimilarMovies(movieId, type),
@@ -50,6 +56,12 @@ export default function RelatedMovies({ movieId, type }: { movieId: number, type
             <RelatedMovieCard key={movie.id} details={movie} type={type} />
           ))}
         </div>
+
+        {relatedMovies && !relatedMovies?.results.length && (
+          <div className='w-full h-full grid place-items-center'>
+            <Text variant={"p"}>No related movies</Text>
+          </div>
+        )}
       </div>
     </div>
   );

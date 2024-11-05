@@ -11,11 +11,12 @@ import Link from "next/link";
 import useGoogleSignUp from "@/hooks/use-google-sign-up";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { auth } from "@/firebase/config";
 
 export default function SignUpMain() {
   return (
     <div className='w-full min-h-full grid place-items-center -mt-4'>
-      <div className='shadow-md rounded-xl md:bg-foreground/10 backdrop-blur-md  w-full md:w-[40vw] min-w-[30rem] h-max px-6 py-6'>
+      <div className='lg:shadow-md rounded-xl lg:bg-foreground/10 backdrop-blur-md  w-full sm:w-[90vw] lg:w-2/5 h-max px-6 py-6'>
         <div className='flex flex-col justify-center'>
           <div className='flex space-x-4 justify-center'>
             <LogoSvg />
@@ -52,10 +53,11 @@ export default function SignUpMain() {
 
 function GoogleSignInButton() {
   const router = useRouter();
-  const { signUpWithGoogle, isSigningUp, isSignedUp } = useGoogleSignUp();
+  const { signUpWithGoogle, isSigningUp } = useGoogleSignUp();
 
-  if (isSigningUp) {
-    toast.success("Account signed up successfully");
+  
+  if (!!auth.currentUser) {
+    toast.success("You signed in successfully");
     router.push("/");
   }
   return (

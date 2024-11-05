@@ -39,7 +39,7 @@ export default function TrendingSeries() {
 
       <div className='relative h-full md:pl-6 group'>
         {/* Scroll Left Button */}
-        <div className='absolute hidden top-0 -left-1 z-30 opacity-0 pb-16 h-full group-hover:opacity-100 md:flex justify-center items-center transition-opacity duration-700'>
+        <div ref={scrollRef} className='absolute hidden top-0 -left-1 z-30 opacity-0 pb-16 h-full group-hover:opacity-100 md:flex justify-center items-center transition-opacity duration-700'>
           {showLeft && (
             <Button
               variant='default'
@@ -52,7 +52,7 @@ export default function TrendingSeries() {
 
         {/* Trending Series List */}
         <div
-          ref={scrollRef}
+          
           id='hide-scrollbar'
           className='flex space-x-4 overflow-y-scroll scrollbar-hide'>
           {!isLoading && !trendingSeries ? notFound() : null}

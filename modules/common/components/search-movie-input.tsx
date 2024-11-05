@@ -91,7 +91,9 @@ export default function SearchMovieInput({
             animate='animate'
             exit='exit'
             className='fixed z-50 w-[50vw] max-w-[50rem] top-8 left-1/2 transform -translate-x-1/2  bg-background border border-foreground/20 shadow-md flex flex-col space-y-3 px-2 pb-4 pt-1 rounded-b-lg'>
-            <div className='w-full flex space-x-1 bg-transparent items-center border-b border-foreground/20 pl-4'>
+            <form
+              onSubmit={searchHandler}
+              className='w-full flex space-x-1 bg-transparent items-center border-b border-foreground/20 pl-4'>
               <input
                 onChange={(e) => debouncedSearchKeyWord(e.target.value)}
                 ref={inputRef}
@@ -101,8 +103,10 @@ export default function SearchMovieInput({
                 aria-label='Search for a movie'
               />
               <Button
-                onClick={searchHandler}
-                disabled={searchKeyWord === "" || !searchResults?.results?.length}
+                type='submit'
+                disabled={
+                  searchKeyWord === "" || !searchResults?.results?.length
+                }
                 variant={"ghost"}
                 className='rounded-full py-2.5 px-2.5'
                 aria-label='Search button'>
@@ -112,7 +116,7 @@ export default function SearchMovieInput({
                   className='group-active:scale-90 transition-all duration-300'
                 />
               </Button>
-            </div>
+            </form>
 
             <div className='w-full'>
               <Text variant={"p"} className='italic font-medium'>

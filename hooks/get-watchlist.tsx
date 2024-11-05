@@ -7,7 +7,7 @@ const getWatchlist = async (): Promise<
   { title: string; id: number; type: "series" | "movie" }[] | undefined
 > => {
   try {
-    // Wait for Firebase auth to ensure the user is available
+    // Ensure the user is authenticated
     const waitForAuth = () =>
       new Promise<void>((resolve, reject) => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -23,14 +23,21 @@ const getWatchlist = async (): Promise<
     await waitForAuth();
 
     const user = auth.currentUser;
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
 
     // Construct the database reference
-    const watchlistRef = ref(db, `users/${user?.uid}/watchlist`);
+    const watchlistRef = ref(db, `users/${user.uid}/watchlist`);
     const snapshot = await get(watchlistRef);
 
-    const watchlist = snapshot.val();
-    // console.log("res", watchlist);
+    if (!snapshot.exists()) {
+      console.warn("No watchlist data found.");
+      return [];
+    }
 
+    // Return the watchlist data if it exists
+    const watchlist = snapshot.val();
     return watchlist;
   } catch (error: any) {
     console.error("Error fetching watchlist:", error.message);

@@ -35,7 +35,7 @@ export default function SidebarButton({
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
+        <TooltipTrigger asChild>
           <Button
             asChild={!disabled}
             variant={"ghost"}

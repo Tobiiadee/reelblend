@@ -16,7 +16,7 @@ export default function SignUp() {
 
   return (
     <div className='h-full w-full'>
-      <div className='w-full h-max flex items-center justify-between px-6 py-2'>
+      <div className='w-full h-max flex items-center justify-between px-4 lg:px-6 py-2 '>
         <Button
           onClick={() => router.back()}
           variant={"ghost"}

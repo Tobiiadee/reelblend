@@ -17,7 +17,7 @@ export function convertDate(dateString: string) {
 
 export function convertToHoursAndMinutes(minutes: number): string {
   const hours = Math.floor(minutes / 60); // Get the whole number of hours
-  const mins = minutes % 60;              // Get the remaining minutes
+  const mins = minutes % 60; // Get the remaining minutes
 
   return `${hours}hr ${mins}mins`;
 }
@@ -51,12 +51,27 @@ export function modTitle(title: string) {
   return title.replace(/\s+/g, "_");
 }
 
-// // Example usage:
-// const totalPages = 4000; // Total number of pages
-// const activePage = 50; // Example of an active page (change this dynamically)
-
-// const pagination = getPaginationPages(totalPages, activePage);
-
-// console.log("Start Page:", pagination.startPage); // e.g. 45
-// console.log("End Page:", pagination.endPage); // e.g. 55
-// console.log("Pages to Show:", pagination.pagesToShow); // e.g. [45, 46, 47, ..., 55]
+export function shareOrCopyLink(url: string) {
+  if (navigator.share) {
+    navigator
+      .share({
+        url: url,
+      })
+      .then(() => console.log("Link shared successfully!"))
+      .catch((error) => console.error("Error sharing link:", error));
+  } else if (navigator.clipboard) {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        console.log("Link copied to clipboard!");
+        alert("Link copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy link:", err);
+      });
+  } else {
+    console.error(
+      "Neither Web Share API nor Clipboard API are supported in this browser."
+    );
+  }
+}

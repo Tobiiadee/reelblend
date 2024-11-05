@@ -23,9 +23,9 @@ export default function WatchlistMain() {
 
   const { data: watchlist, isLoading: isWatchlistLoading } = useQuery({
     queryKey: ["watchlist", inWatchlist],
-    queryFn: getWatchlist,
-    staleTime: 0,
+    queryFn: () => getWatchlist(),
   });
+
 
   const { movieIds, seriesIds } = useMemo(() => {
     const movies: string[] = [];
@@ -47,6 +47,9 @@ export default function WatchlistMain() {
     queryFn: () => Promise.all(movieIds.map(getMovieDetails)),
     enabled: movieIds.length > 0,
   });
+
+  // console.log("Watchlist Ids:", movieIds);
+  
 
   const { data: seriesWatchlist, isLoading: seriesLoading } = useQuery({
     queryKey: ["watchlist", "series"],

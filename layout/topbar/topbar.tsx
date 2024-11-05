@@ -71,7 +71,7 @@ export default function TopBar() {
 
   useEffect(() => {
     // Wait for Firebase auth to ensure the user is available
-    const waitForAuth = () =>
+    const waitForAuth = async () =>
       new Promise<void>((resolve, reject) => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
           if (user) {
@@ -104,18 +104,18 @@ export default function TopBar() {
       <div
         className={`fixed ${
           scrolled ? "backdrop-blur-md md:pl-10" : ""
-        } top-0 left-0 md:left-28 pl-6 md:pl-0 z-30 py-3 flex justify-between items-center w-[100%] md:w-[90%] transition-all duration-500`}>
+        } top-0 left-0 lg:left-28 pl-6 lg:pl-0 z-30 py-3 flex justify-between items-center w-[100%] lg:w-[90%] transition-all duration-500`}>
         <div className='flex items-center space-x-4'>
           <Button
             onClick={mobileDrawerHandler}
-            variant={"outline"}
-            className='px-2 md:hidden'>
+            variant={"ghost"}
+            className='px-2 lg:hidden'>
             <Menu strokeWidth={1.5} />
           </Button>
           <Logo />
         </div>
 
-        <div className='w-full max-w-[40vw] flex justify-end md:justify-center'>
+        <div className='w-full max-w-[40vw] flex justify-end lg:justify-center'>
           <AnimatePresence mode='wait'>
             {!openSearch && (
               <TopBarSearchComp
@@ -134,12 +134,6 @@ export default function TopBar() {
         <TopBarAdmin />
 
         <MobileDrawer trigger={mobileDrawerRef} />
-
-        {userOnAuth && (
-          <AnimatePresence mode='wait'>
-            <SignInSlide setSlider={setUserOnAuth} />
-          </AnimatePresence>
-        )}
       </div>
       {openSearch && (
         <SearchMovieInput search={openSearch} setSearch={setOpenSearch} />

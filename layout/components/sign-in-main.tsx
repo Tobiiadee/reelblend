@@ -10,11 +10,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useGoogleSignIn from "@/hooks/use-google-sign-in";
 import { toast } from "sonner";
+import { auth } from "@/firebase/config";
 
 export default function SignInMain() {
   return (
-    <div className='w-full min-h-full grid place-items-center -mt-10'>
-      <div className='shadow-md rounded-xl md:bg-foreground/10 backdrop-blur-md w-full md:w-[35vw] min-w-[26rem] h-max px-6 py-6'>
+    <div className='w-full min-h-full grid place-items-center lg:-mt-10'>
+      <div className='lg:shadow-md h-full rounded-xl lg:bg-foreground/10 backdrop-blur-md w-full sm:w-[90vw] lg:w-2/5 px-6 py-6'>
         <div className='flex flex-col justify-center'>
           <div className='flex space-x-4 justify-center'>
             <LogoSvg />
@@ -36,6 +37,7 @@ export default function SignInMain() {
           <Text variant={"p"}>or</Text>
           <Separator orientation='horizontal' className='bg-foreground/50' />
         </div>
+
         <SignInForm />
 
         <div className='mt-4'>
@@ -54,8 +56,10 @@ export default function SignInMain() {
 export function GoogleSignInButton() {
   const router = useRouter();
   const { signInWithGoogle, isSigningIn, isSignedIn } = useGoogleSignIn();
+  
+  
 
-  if (isSignedIn) {
+  if (!!auth.currentUser) {
     toast.success("You signed in successfully");
     router.push("/");
   }

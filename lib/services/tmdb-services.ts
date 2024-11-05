@@ -159,6 +159,8 @@ export const getMovieDetails = async (
   try {
     const response = await tmdbinstance.get(`/movie/${id}?language=en-US`);
     const result = response.data;
+    // console.log(result);
+    
     return result;
   } catch (error: any) {
     console.log(error);

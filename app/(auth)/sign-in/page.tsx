@@ -15,7 +15,7 @@ export default function SignIn() {
 
   return (
     <div className='h-[90vh] w-full'>
-      <div className='w-full h-max flex items-center justify-between px-6 py-2'>
+      <div className='w-full h-max flex items-center justify-between px-2 lg:px-6 py-2 '>
         <Button
           onClick={() => router.back()}
           variant={"ghost"}
@@ -31,7 +31,7 @@ export default function SignIn() {
       <GridPattern
         className={cn(
           "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
-          "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12"
+          "inset-x-0 inset-y-[-30%] h-[100%] skew-y-12 min-w-full"
         )}
       />
     </div>
