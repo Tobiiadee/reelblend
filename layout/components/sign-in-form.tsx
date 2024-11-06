@@ -21,11 +21,15 @@ import useSignIn from "@/hooks/use-sign-in";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Text } from "@/modules/common/components/text";
+import { ShowPassword } from "./sign-up-form";
 
 export default function SignInForm() {
   const router = useRouter();
   const { signIn, isSigningIn, isSignedIn, errorMessage, errorSigningIn } =
     useSignIn();
+
+  //Show or hide password
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -46,7 +50,7 @@ export default function SignInForm() {
         message: errorMessage ? errorMessage : "An error occurred",
       });
     }
-  }, [errorSigningIn, form]);
+  }, [errorSigningIn, form, errorMessage]);
 
   //   console.log(errorMessage);
 
@@ -79,11 +83,19 @@ export default function SignInForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type='password'
-                    placeholder='enter your password...'
-                    {...field}
-                  />
+                  <div className='relative'>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      className='pr-8'
+                      placeholder='enter your password...'
+                      {...field}
+                    />
+
+                    <ShowPassword
+                      showPassword={showPassword}
+                      setShowPassword={() => setShowPassword(!showPassword)}
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +110,11 @@ export default function SignInForm() {
         </div>
 
         <div className='w-full grid place-items-center'>
-          <Button isLoading={isSigningIn} type='submit' className='w-60'>
+          <Button
+            isLoading={isSigningIn}
+            disabled={!form.formState.isValid || isSigningIn}
+            type='submit'
+            className='w-60'>
             Sign in
           </Button>
         </div>

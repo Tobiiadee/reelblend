@@ -44,7 +44,7 @@ export default function TopRated() {
           ref={scrollRef}
           className='flex space-x-6 md:space-x-4 w-full rounded-lg overflow-y-scroll'>
           {isLoading &&
-            Array.from({ length: 10 }).map((_, index) => (
+            Array.from({ length: 5 }).map((_, index) => (
               <MovieSkeleton key={index} />
             ))}
           {topRatedMovies?.results.map((movie) => (

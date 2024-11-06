@@ -21,6 +21,7 @@ import { usePathname } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import useSignOut from "@/hooks/use-sign-out";
+import useUserStore from "@/modules/store/user-store";
 
 interface MobileDrawerProps {
   trigger: RefObject<HTMLButtonElement>;
@@ -33,6 +34,8 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
   const { pageNumber } = usePaginationStoreMovies();
   const [user] = useAuthState(auth);
   const { logOut } = useSignOut();
+
+  const displayName = auth.currentUser?.displayName;
 
   useEffect(() => {
     const redirectTo = (target: string) => {
@@ -59,7 +62,9 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
       </SheetTrigger>
       <SheetContent className='pb-14'>
         <SheetHeader>
-          <SheetTitle className='sr-only hidden'>Drawer title</SheetTitle>
+          <SheetTitle className=''>
+            <Text variant={"p"}>Welcome, {displayName}</Text>
+          </SheetTitle>
           <SheetDescription className='sr-only hidden'>
             drawer description
           </SheetDescription>
@@ -128,7 +133,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
               <Text variant={"p"}>Sign out</Text>
             </SheetClose>
           )}
-          <ToggleTheme className="-top-32 -left-36"/>
+          <ToggleTheme className='-top-32 -left-36' />
         </div>
       </SheetContent>
     </Sheet>

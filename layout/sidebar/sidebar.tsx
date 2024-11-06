@@ -15,16 +15,17 @@ export default function SideBar() {
       <div className='flex flex-col justify-between space-y-6'>
         <MoreProjects />
       </div>
-      <div className='flex flex-col space-y-1'>
+
+      <div className='flex flex-col space-y-4'>
         <SidebarButton path='/' toolTipContent='Home'>
           <House size={22} strokeWidth={1.5} />
         </SidebarButton>
         <SidebarButton path='/watchlist' toolTipContent='watchlist'>
-          <Presentation size={22} strokeWidth={1.5} />
+          <Presentation size={20} strokeWidth={1.5} />
         </SidebarButton>
-        <SidebarButton disabled={true} path='' toolTipContent='favourite'>
+        {/* <SidebarButton disabled={true} path='' toolTipContent='favourite'>
           <Star size={22} strokeWidth={1.5} />
-        </SidebarButton>
+        </SidebarButton> */}
         <SidebarButton
           path='https://portfolio10-git-main-tobi-ades-projects.vercel.app/contact'
           target={true}

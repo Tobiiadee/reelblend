@@ -18,7 +18,7 @@ export default function SignUpMain() {
     <div className='w-full min-h-full grid place-items-center -mt-4'>
       <div className='lg:shadow-md rounded-xl lg:bg-foreground/10 backdrop-blur-md  w-full sm:w-[90vw] lg:w-2/5 h-max px-6 py-6'>
         <div className='flex flex-col justify-center'>
-          <div className='flex space-x-4 justify-center'>
+          <div className='flex space-x-4 items-center justify-center'>
             <LogoSvg />
             <Text variant={"h4"} className='text-foreground font-serif'>
               ReelBlend
@@ -57,7 +57,7 @@ function GoogleSignInButton() {
 
   
   if (!!auth.currentUser) {
-    toast.success("You signed in successfully");
+    toast.success("Your account has been created successfully.");
     router.push("/");
   }
   return (

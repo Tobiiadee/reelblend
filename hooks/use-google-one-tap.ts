@@ -11,19 +11,6 @@ export default function useCustomGoogleOneTap() {
   const [isSigingedIn, setIsSigingedIn] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
 
-  const waitForAuth = () =>
-    new Promise<void>((resolve, reject) => {
-      const unsubscribe = auth.onAuthStateChanged((user) => {
-        if (user) {
-          resolve();
-        } else {
-          reject(new Error("User not authenticated"));
-        }
-        unsubscribe(); // Clean up the listener
-      });
-    });
-
-
   async function signInWithGoogle(idToken: string): Promise<void> {
     setIsSigingIn(true);
     setIsSigingedIn(false);

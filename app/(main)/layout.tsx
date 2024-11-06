@@ -1,5 +1,6 @@
 /** @format */
 
+import VerifyEmail from "@/layout/components/verify-email";
 import Footer from "@/layout/footer/footer";
 import SideBar from "@/layout/sidebar/sidebar";
 import TopBar from "@/layout/topbar/topbar";

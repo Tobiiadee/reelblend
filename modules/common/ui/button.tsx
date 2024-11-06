@@ -65,7 +65,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         disabled={disabled}>
-        {children}
+        <div className={cn('w-max flex space-x-6 justify-center items-center', className)}>
+          {isLoading && <LoaderCircle className='mr-2 h-4 w-4 animate-spin' />}
+          {children}
+        </div>
       </Comp>
     );
   }

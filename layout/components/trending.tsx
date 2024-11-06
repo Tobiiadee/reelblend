@@ -66,7 +66,7 @@ export default function Trending() {
           className='flex space-x-4 overflow-y-scroll scrollbar-hide'>
           {!isLoading && !trendingMovies ? notFound() : null}
           {isLoading
-            ? Array.from({ length: 10 }).map((_, index) => (
+            ? Array.from({ length: 5 }).map((_, index) => (
                 <MovieSkeleton key={index} />
               ))
             : trendingMovies?.results.map(

@@ -12,19 +12,22 @@ import {
   FormMessage,
 } from "@/modules/common/ui/form";
 import { Input } from "@/modules/common/ui/input";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/modules/common/ui/button";
 import useSignUp from "@/hooks/use-sign-up";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-// import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-// import { auth } from "@/firebase/config";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function SignUpForm() {
   const router = useRouter();
+
+  //Show or hide password
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const {
     signUp,
@@ -37,6 +40,7 @@ export default function SignUpForm() {
 
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
+    mode: "onChange",
     defaultValues: {
       username: "",
       password: "",
@@ -47,29 +51,27 @@ export default function SignUpForm() {
 
   function onSubmit(values: z.infer<typeof SignUpSchema>) {
     signUp(values.email, values.confirmPassword, values.username);
-
-    // if (!isEmailExist && !isUsernameExist) {
-    //   form.reset();
-    // }
   }
 
   useEffect(() => {
     if (isUsernameExist) {
-      form.setError("email", {
-        type: "manual",
-        message: "This email already exists",
-      });
-    }
-    if (isEmailExist) {
       form.setError("username", {
         type: "manual",
         message: "Username not available",
       });
     }
-  }, [isEmailExist, isUsernameExist]);
+    if (isEmailExist) {
+      form.setError("email", {
+        type: "manual",
+        message: "This email already exists",
+      });
+    }
+  }, [isEmailExist, isUsernameExist, form]);
 
   if (isUserCreated) {
-    toast.success("Account created successfully");
+    toast.success(
+      "Your account has been cread. We have sent you an email to verify your account"
+    );
     router.push("/");
   }
 
@@ -112,11 +114,19 @@ export default function SignUpForm() {
                 <FormItem className='w-full'>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type='password'
-                      placeholder='enter your password...'
-                      {...field}
-                    />
+                    <div className='relative'>
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        className='pr-8'
+                        placeholder='enter your password...'
+                        {...field}
+                      />
+
+                      <ShowPassword
+                        showPassword={showPassword}
+                        setShowPassword={() => setShowPassword(!showPassword)}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -130,11 +140,21 @@ export default function SignUpForm() {
                 <FormItem className='w-full'>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type='password'
-                      placeholder='confirm your password...'
-                      {...field}
-                    />
+                    <div className='relative'>
+                      <Input
+                        type={showPasswordConfirm ? "text" : "password"}
+                        className='pr-8'
+                        placeholder='confirm your password...'
+                        {...field}
+                      />
+
+                      <ShowPassword
+                        showPassword={showPasswordConfirm}
+                        setShowPassword={() =>
+                          setShowPasswordConfirm(!showPasswordConfirm)
+                        }
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -144,11 +164,35 @@ export default function SignUpForm() {
         </div>
 
         <div className='w-full grid place-items-center'>
-          <Button isLoading={isSigningUp} type='submit' className='w-60'>
+          <Button
+            isLoading={isSigningUp}
+            disabled={!form.formState.isValid || isSigningUp}
+            type='submit'
+            className='w-60'>
             Sign up
           </Button>
         </div>
       </form>
     </FormProvider>
+  );
+}
+
+export function ShowPassword({
+  showPassword,
+  setShowPassword,
+}: {
+  showPassword: boolean;
+  setShowPassword: () => void;
+}) {
+  return (
+    <div
+      onClick={setShowPassword}
+      className='flex items-center space-x-2 absolute top-1/2 -translate-y-1/2 right-2 cursor-pointer'>
+      {!showPassword ? (
+        <EyeOffIcon strokeWidth={1.5} size={20} className='text-foreground' />
+      ) : (
+        <EyeIcon strokeWidth={1.5} size={20} className='text-foreground' />
+      )}
+    </div>
   );
 }

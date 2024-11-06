@@ -98,6 +98,7 @@ export default function TopBarSearchComp({
             Series
           </Text>
         </Button>
+
         <Button
           disabled
           variant={"link"}
@@ -106,6 +107,7 @@ export default function TopBarSearchComp({
             Originals
           </Text>
         </Button>
+        
         <Search searchAction={openSearch} />
       </motion.div>
       <MobileSearch />

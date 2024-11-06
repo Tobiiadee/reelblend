@@ -1,11 +1,14 @@
 /** @format */
 
-"use client"
+"use client";
 
 import { Text } from "@/modules/common/components/text";
 import React from "react";
 import MovieCard from "./movie-card";
-import { getUpcomingMovies, getUpcomingSeries } from "@/lib/services/tmdb-services";
+import {
+  getUpcomingMovies,
+  getUpcomingSeries,
+} from "@/lib/services/tmdb-services";
 import MovieSkeleton from "@/modules/common/components/movie-skeleton";
 import { useQuery } from "@tanstack/react-query";
 
@@ -22,20 +25,21 @@ export default function UpcomingSeries() {
       </Text>
       <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full md:pl-6'>
         {isLoading &&
-          Array.from({ length: 10 }).map((_, index) => (
+          Array.from({ length: 5 }).map((_, index) => (
             <MovieSkeleton key={index} />
           ))}
-        {upcomingSeries && upcomingSeries?.results.map((series) => (
-          <MovieCard
-            key={series.id}
-            id={series.id}
-            year={series.first_air_date}
-            title={series.original_name}
-            rating={series.vote_average}
-            posterPath={series.poster_path}
-            type="series"
-          />
-        ))}
+        {upcomingSeries &&
+          upcomingSeries?.results.map((series) => (
+            <MovieCard
+              key={series.id}
+              id={series.id}
+              year={series.first_air_date}
+              title={series.original_name}
+              rating={series.vote_average}
+              posterPath={series.poster_path}
+              type='series'
+            />
+          ))}
       </div>
     </div>
   );

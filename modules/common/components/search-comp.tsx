@@ -58,6 +58,7 @@ export default function SearchComp() {
           placeholder={`Search for ${typeState}`}
           className='w-full border-none outline-none text-[14px] bg-transparent placeholder:text-foreground/50 placeholder:text-[14px]'
         />
+        
         <Button
           onClick={searchHandler}
           disabled={searchKeyWord === "" || !searchResults?.results?.length}

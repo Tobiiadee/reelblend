@@ -1,9 +1,14 @@
 /** @format */
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 import { ref, set, get, child } from "firebase/database";
 import { auth, db } from "@/firebase/config"; // import auth and database from your firebaseConfig.js
 import { useState } from "react";
+import useUserStore from "@/modules/store/user-store";
 
 // Function to check if the username already exists in Realtime Database
 const checkUsernameExists = async (username: string) => {
@@ -25,6 +30,9 @@ export default function useSignUp() {
   const [isEmailExist, setIsEmailExist] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
   const [errorSigningUp, setErrorSigningUp] = useState(false);
+
+  //Store user data
+  const setUserCredential = useUserStore((state) => state.setUser);
 
   // Function to sign up a user with email, password, and username
   const signUp = async (email: string, password: string, username: string) => {
@@ -49,21 +57,32 @@ export default function useSignUp() {
       );
       const user = userCredential.user;
 
-       // Set the display name for the user
-       await updateProfile(user, {
+      if (user.email === null) return;
+      setUserCredential({
+        uid: user.uid,
+        email: user.email,
+        displayName: username,
+      });
+
+      // Set the display name for the user
+      await updateProfile(user, {
         displayName: username, // This sets the display name
       });
 
-      // Store additional user data (username) in Realtime Database
-      await set(ref(db, `users/${user.uid}`), {
-        uid: user.uid, // Store the user's unique ID (uid)
-        username: username, // Store the username
-        email: email, // Store the user's email
-        watchlist: []
-      });
+      //Send email verification
+      await sendEmailVerification(user);
 
+      // // Store additional user data (username) in Realtime Database
+      // if (auth.currentUser?.emailVerified) {
+      //   await set(ref(db, `users/${user.uid}`), {
+      //     uid: user.uid, // Store the user's unique ID (uid)
+      //     username: username, // Store the username
+      //     email: email, // Store the user's email
+      //     watchlist: [],
+      //   });
+      // }
 
-      setIsSigningUp(false)
+      setIsSigningUp(false);
       console.log(
         "User signed up successfully with username, email, and password!"
       );

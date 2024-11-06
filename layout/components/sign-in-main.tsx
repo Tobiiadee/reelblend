@@ -17,7 +17,7 @@ export default function SignInMain() {
     <div className='w-full min-h-full grid place-items-center lg:-mt-10'>
       <div className='lg:shadow-md h-full rounded-xl lg:bg-foreground/10 backdrop-blur-md w-full sm:w-[90vw] lg:w-2/5 px-6 py-6'>
         <div className='flex flex-col justify-center'>
-          <div className='flex space-x-4 justify-center'>
+          <div className='flex space-x-4 items-center justify-center'>
             <LogoSvg />
             <Text variant={"h4"} className='text-foreground font-serif'>
               ReelBlend

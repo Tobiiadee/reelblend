@@ -30,7 +30,6 @@ export default function RootLayout({
             disableTransitionOnChange>
             <div id='overlay' />
             <ClientProvider>{children}</ClientProvider>
-            
             <Toaster />
           </ThemeProvider>
         </body>
