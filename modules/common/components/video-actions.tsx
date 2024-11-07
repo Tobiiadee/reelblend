@@ -29,7 +29,6 @@ export default function VideoActions({
     queryFn: () => getMovieTrailer(id, type),
   });
 
-  console.log(trailers);
   
 
   const trailerKey = trailers && trailers?.results
