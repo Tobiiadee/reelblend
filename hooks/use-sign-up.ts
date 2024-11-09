@@ -30,6 +30,8 @@ export default function useSignUp() {
   const [isEmailExist, setIsEmailExist] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
   const [errorSigningUp, setErrorSigningUp] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
 
   //Store user data
   const setUserCredential = useUserStore((state) => state.setUser);
@@ -38,6 +40,7 @@ export default function useSignUp() {
   const signUp = async (email: string, password: string, username: string) => {
     setIsSigningUp(true);
     setErrorSigningUp(false);
+    setErrorMessage(null);
     try {
       // Check if username is unique
       const usernameExists = await checkUsernameExists(username);
@@ -72,16 +75,6 @@ export default function useSignUp() {
       //Send email verification
       await sendEmailVerification(user);
 
-      // // Store additional user data (username) in Realtime Database
-      // if (auth.currentUser?.emailVerified) {
-      //   await set(ref(db, `users/${user.uid}`), {
-      //     uid: user.uid, // Store the user's unique ID (uid)
-      //     username: username, // Store the username
-      //     email: email, // Store the user's email
-      //     watchlist: [],
-      //   });
-      // }
-
       setIsSigningUp(false);
       console.log(
         "User signed up successfully with username, email, and password!"
@@ -89,13 +82,16 @@ export default function useSignUp() {
       //   const uid = userCredential.user.uid;
       setIsUsernameExist(false);
       setIsUserCreated(true);
+      setErrorMessage(null);
     } catch (error: any) {
-      if (error.code === "auth/email-already-in-use") {
+      if (error.message === "auth/email-already-in-use") {
         setIsEmailExist(true);
       }
       console.error("Error signing up:", error.message);
+      setIsSigningUp(false)
       setErrorSigningUp(true);
       setIsUserCreated(false);
+      setErrorMessage(error.message);
     }
   };
 
@@ -106,6 +102,7 @@ export default function useSignUp() {
     isUserCreated,
     errorSigningUp,
     isEmailExist,
+    errorMessage
   };
 }
 

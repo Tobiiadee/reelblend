@@ -10,7 +10,7 @@ interface WatchlistStateType {
 }
 
 const useWatchlistState = create<WatchlistStateType>((set) => ({
-  inWatchlist: false,
+  inWatchlist: true,
   setInWatchlist: (newValue) =>
     set(() => ({
       inWatchlist: newValue,

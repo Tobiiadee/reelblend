@@ -13,17 +13,19 @@ import React from "react";
 import AdminProfile from "./admin-profile";
 import { useRouter } from "next/navigation";
 import { Text } from "./text";
-import useSignOut from "@/hooks/use-sign-out";
+import useSignOutCustom from "@/hooks/use-sign-out";
 import { toast } from "sonner";
 
 export default function UserDropdown() {
   const router = useRouter();
-  const { isSignedOut, logOut, errorSigningOut } = useSignOut();
+  const { isSignedOut, logOut, errorSigningOut } = useSignOutCustom();
   if (isSignedOut) toast.success("User is signed out");
   if (!!errorSigningOut) toast.error("An error has occurred");
 
   const logOutHandler = () => {
     logOut();
+    window.location.reload();
+    // router.refresh();
   };
 
   return (

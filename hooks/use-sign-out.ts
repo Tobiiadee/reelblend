@@ -4,7 +4,7 @@ import { signOut } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "@/firebase/config"; // Import your Firebase auth configuration
 
-export default function useSignOut() {
+export default function useSignOutCustom() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [isSignedOut, setIsSignedOut] = useState(false);
   const [errorSigningOut, setErrorSigningOut] = useState<string | null>(null);

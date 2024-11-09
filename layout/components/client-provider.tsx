@@ -61,7 +61,7 @@ export default function ClientProvider({ children }: { children: ReactNode }) {
       }
 
       // Store additional user data (username) in Realtime Database
-      if (auth.currentUser?.emailVerified) {
+      if (auth.currentUser?.emailVerified && userDetails) {
         await set(ref(db, `users/${userDetails?.uid}`), {
           uid: userDetails?.uid, // Store the user's unique ID (uid)
           username: userDetails?.displayName, // Store the username

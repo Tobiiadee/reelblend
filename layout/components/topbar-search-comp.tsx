@@ -79,7 +79,7 @@ export default function TopBarSearchComp({
             setTypeState("movies");
           }}
           variant={"link"}
-          disabled={!!isDashboardSeriesPath}
+          // disabled={!!isDashboardSeriesPath}
           className={`text-[#6f7377] ${
             typeState === "movies" ? "text-background" : ""
           } hover:text-background`}>
@@ -90,7 +90,7 @@ export default function TopBarSearchComp({
         <Button
           onClick={() => setTypeState("series")}
           variant={"link"}
-          disabled={!!isDashboardSeriesPath}
+          // disabled={!!isDashboardSeriesPath}
           className={`text-[#6f7377] ${
             typeState === "series" ? "text-background" : ""
           } hover:text-background`}>
@@ -107,7 +107,7 @@ export default function TopBarSearchComp({
             Originals
           </Text>
         </Button>
-        
+
         <Search searchAction={openSearch} />
       </motion.div>
       <MobileSearch />

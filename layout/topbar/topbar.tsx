@@ -86,7 +86,7 @@ export default function TopBar() {
     mobileDrawerRef.current.click();
   };
 
-  const isEmailVerified = !emailVerify && auth.currentUser;
+  const isEmailVerified = !emailVerify && auth.currentUser && !auth.currentUser.emailVerified;
 
   return (
     <>

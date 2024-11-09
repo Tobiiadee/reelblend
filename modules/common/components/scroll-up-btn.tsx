@@ -45,7 +45,7 @@ export default function ScrollUpBtn() {
             <Button
               onClick={handleClick}
               variant={"default"}
-              className='shadow-md rounded-full px-2 py-7 '>
+              className='shadow-md rounded-full px-2 py-7 overflow-hidden'>
               <ArrowUpFromDot />
             </Button>
           </motion.div>

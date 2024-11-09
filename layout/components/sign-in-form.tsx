@@ -1,35 +1,34 @@
-/** @format */
-
 "use client";
 
 import { SignInSchema } from "@/lib/schema/schema";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/modules/common/ui/form";
 import { Input } from "@/modules/common/ui/input";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Button } from "@/modules/common/ui/button";
 import useSignIn from "@/hooks/use-sign-in";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Text } from "@/modules/common/components/text";
 import { ShowPassword } from "./sign-up-form";
+import useFirebaseErrors from "@/hooks/use-firebase-errors";
 
 export default function SignInForm() {
   const router = useRouter();
   const { signIn, isSigningIn, isSignedIn, errorMessage, errorSigningIn } =
     useSignIn();
 
-  //Show or hide password
-  const [showPassword, setShowPassword] = React.useState(false);
+  const { authError, setFirebaseError } = useFirebaseErrors();
+
+  // Show or hide password state
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
@@ -44,33 +43,32 @@ export default function SignInForm() {
   }
 
   useEffect(() => {
-    if (errorSigningIn) {
+    setFirebaseError(errorMessage);
+
+    if (errorSigningIn && authError) {
       form.setError("root", {
         type: "manual",
-        message: errorMessage ? errorMessage : "An error occurred",
+        message: authError,
       });
     }
-  }, [errorSigningIn, form, errorMessage]);
 
-  //   console.log(errorMessage);
-
-  if (isSignedIn) {
-    toast.success("Signed in successfully");
-    router.push("/");
-  }
+    if (isSignedIn) {
+      router.push("/");
+    }
+  }, [errorSigningIn, errorMessage, authError, isSignedIn, form, router]);
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 mt-4'>
-        <div className='space-y-4'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mt-4">
+        <div className="space-y-4">
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder='enter your email...' {...field} />
+                  <Input placeholder="Enter your email..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,19 +76,18 @@ export default function SignInForm() {
           />
           <FormField
             control={form.control}
-            name='password'
+            name="password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <div className='relative'>
+                  <div className="relative">
                     <Input
                       type={showPassword ? "text" : "password"}
-                      className='pr-8'
-                      placeholder='enter your password...'
+                      className="pr-8"
+                      placeholder="Enter your password..."
                       {...field}
                     />
-
                     <ShowPassword
                       showPassword={showPassword}
                       setShowPassword={() => setShowPassword(!showPassword)}
@@ -103,18 +100,19 @@ export default function SignInForm() {
           />
 
           {form.formState.errors.root && (
-            <Text variant={"p"} className='text-red-500'>
+            <Text variant="p" className="text-red-500">
               {form.formState.errors.root.message}
             </Text>
           )}
         </div>
 
-        <div className='w-full grid place-items-center'>
+        <div className="w-full grid place-items-center">
           <Button
             isLoading={isSigningIn}
             disabled={!form.formState.isValid || isSigningIn}
-            type='submit'
-            className='w-60'>
+            type="submit"
+            className="w-60"
+          >
             Sign in
           </Button>
         </div>

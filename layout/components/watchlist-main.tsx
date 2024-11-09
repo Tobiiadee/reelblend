@@ -16,6 +16,7 @@ import Loader from "@/modules/common/ui/loader";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { Text } from "@/modules/common/components/text";
+import { AnimatePresence } from "framer-motion";
 
 export default function WatchlistMain() {
   const [user] = useAuthState(auth);
@@ -25,7 +26,6 @@ export default function WatchlistMain() {
     queryKey: ["watchlist", inWatchlist],
     queryFn: () => getWatchlist(),
   });
-
 
   const { movieIds, seriesIds } = useMemo(() => {
     const movies: string[] = [];
@@ -42,65 +42,36 @@ export default function WatchlistMain() {
     return { movieIds: movies, seriesIds: series };
   }, [watchlist]);
 
-  const { data: movieWatchlist, isLoading: moviesLoading } = useQuery({
-    queryKey: ["watchlist", "movies"],
-    queryFn: () => Promise.all(movieIds.map(getMovieDetails)),
-    enabled: movieIds.length > 0,
-  });
+  const isEmptyWatchlist = !isWatchlistLoading && watchlist?.length === 0;
 
   // console.log("Watchlist Ids:", movieIds);
-  
 
-  const { data: seriesWatchlist, isLoading: seriesLoading } = useQuery({
-    queryKey: ["watchlist", "series"],
-    queryFn: () => Promise.all(seriesIds.map(getSeriesDetails)),
-    enabled: seriesIds.length > 0,
-  });
-
-  const isEmptyWatchlist = !isWatchlistLoading && watchlist?.length === 0;
+  if (isWatchlistLoading && user) {
+    return (
+      <div className='w-full h-[45vh] grid place-items-center'>
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col space-y-8'>
-      {/* Loading State */}
-      {isWatchlistLoading && user && (
-        <div className='w-full h-[45vh] grid place-items-center'>
-          <Loader />
-        </div>
-      )}
+      {user ? (
+        <>
+          <AnimatePresence mode='wait'>
+            <WatchlistMovies movieIds={movieIds} />
 
-      {/* Watchlist Movies */}
-      {!isWatchlistLoading &&
-        user &&
-        movieWatchlist &&
-        movieWatchlist?.length > 0 && (
-          <WatchlistMovies
-            watchlist={movieWatchlist}
-            isLoading={moviesLoading}
-          />
-        )}
-
-      {/* Watchlist Series */}
-      {!isWatchlistLoading &&
-        user &&
-        seriesWatchlist &&
-        seriesWatchlist?.length > 0 && (
-          <WatchlistSeries
-            watchlist={seriesWatchlist}
-            isLoading={seriesLoading}
-          />
-        )}
-
-      {/* Empty Watchlist */}
-      {isEmptyWatchlist && (
+            <WatchlistSeries seriesIds={seriesIds} />
+          </AnimatePresence>
+          {isEmptyWatchlist && (
+            <div className='w-full h-full grid place-items-center'>
+              <Text variant='h4'>Your watchlist is empty</Text>
+            </div>
+          )}
+        </>
+      ) : (
         <div className='w-full h-full grid place-items-center'>
-          <Text variant='h4'>Your watchlist is empty</Text>
-        </div>
-      )}
-
-      {/* Not Signed In */}
-      {!user && (
-        <div className='w-full h-full grid place-items-center'>
-          <Text variant='h4'>You&rsquo;re not signed in</Text>
+          <Text variant='h4'>You’re not signed in</Text>
         </div>
       )}
     </div>

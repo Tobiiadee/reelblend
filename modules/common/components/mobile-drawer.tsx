@@ -20,8 +20,9 @@ import usePaginationStoreMovies from "@/modules/store/pagination-store-movies";
 import { usePathname } from "next/navigation";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
-import useSignOut from "@/hooks/use-sign-out";
+// import useSignOut from "@/hooks/use-sign-out";
 import useUserStore from "@/modules/store/user-store";
+import useSignOutCustom from "@/hooks/use-sign-out";
 
 interface MobileDrawerProps {
   trigger: RefObject<HTMLButtonElement>;
@@ -33,7 +34,7 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
   const { typeState, setTypeState } = useTypeStateStore();
   const { pageNumber } = usePaginationStoreMovies();
   const [user] = useAuthState(auth);
-  const { logOut } = useSignOut();
+  const { logOut } = useSignOutCustom();
 
   const displayName = auth.currentUser?.displayName;
 
@@ -95,12 +96,6 @@ export default function MobileDrawer({ trigger }: MobileDrawerProps) {
             <SheetClose asChild>
               <Link href={"/watchlist"}>
                 <Text variant={"p"}>Watchlist</Text>
-              </Link>
-            </SheetClose>
-
-            <SheetClose asChild>
-              <Link href={"/"}>
-                <Text variant={"p"}>Favourite</Text>
               </Link>
             </SheetClose>
 

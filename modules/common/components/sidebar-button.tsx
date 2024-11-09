@@ -39,7 +39,7 @@ export default function SidebarButton({
           <Button
             asChild={!disabled}
             variant={"ghost"}
-            className={`rounded px-1.5 py-[10px] hover:bg-foreground hover:text-background border border-transparent ${
+            className={`rounded-full flex items-center justify-center px-1.5 py-[10px] hover:bg-foreground hover:text-background border border-transparent transition-all duration-300 ${
               isActive ? "border bg-foreground text-background" : ""
             }`}
             disabled={disabled}
@@ -49,7 +49,7 @@ export default function SidebarButton({
             </Link>
           </Button>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent sideOffset={18} className="ml-10">
           <Text variant={"p"} className='text-[10px] font-meduim capitalize'>
             {toolTipContent}
           </Text>

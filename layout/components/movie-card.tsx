@@ -178,53 +178,66 @@ function FavButton({
   const removeFromWatchlistHandler = () => {
     removeDataFromWatchlist(id);
     setFav(false);
-    setInWatchlist(true);
+    setInWatchlist(false);
   };
 
-  if (dataSent) {
-    toast.success(
-      `${type === "series" ? "Series" : "Movie"} removed from watchlist`
-    );
-  }
-
-  // console.log("fav", fav);
-  // console.log("matched Item", !!matchedItem);
-
-  const addFav = fav && !!matchedItem && "#f84531";
-  const notFav = !fav && !!matchedItem === false && "transparent";
+  useEffect(() => {
+    if (dataSent) {
+      toast.success(
+        `${type === "series" ? "Series" : "Movie"} removed from watchlist`
+      );
+    }
+  }, [dataSent, type]);
 
   return (
     <>
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              onClick={!!matchedItem ? removeFromWatchlistHandler : onClickFav}
-              variant={"ghost"}
-              className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
-              <Heart
-                size={20}
-                strokeWidth={1}
-                color='#f84531'
-                fill={
-                  fav ? "#f84531" : !!matchedItem ? "#f84531" : "transparent"
-                }
-              />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            {!fav && !!matchedItem === false ? (
+      {!fav && !matchedItem ? (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={onClickFav}
+                variant={"ghost"}
+                className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
+                <Heart
+                  size={20}
+                  strokeWidth={1}
+                  color='#f84531'
+                  fill={"transparent"}
+                />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
               <Text variant={"p"} className='text-[10px]'>
                 Add to watchlist
               </Text>
-            ) : (
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ) : (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={removeFromWatchlistHandler}
+                variant={"ghost"}
+                className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
+                <Heart
+                  size={20}
+                  strokeWidth={1}
+                  color='#f84531'
+                  fill={"#f84531"}
+                />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
               <Text variant={"p"} className='text-[10px]'>
                 Remove from watchlist
               </Text>
-            )}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      )}
     </>
   );
 }
