@@ -7,7 +7,7 @@ import DetailsActions from "./video-actions";
 import Storyline from "./storyline";
 import Casts from "./casts";
 
-interface DetailsProps {
+interface SeriesDetailsProps {
   title: string;
   genres: [{ id: number; name: string }];
   overview: string;
@@ -15,13 +15,13 @@ interface DetailsProps {
   type: "movie" | "series"
 }
 
-export default function Details({
+export default function SeriesDetails({
   title,
   genres,
   overview,
   id,
   type
-}: DetailsProps) {
+}: SeriesDetailsProps) {
   return (
     <div className='w-full flex flex-col space-y-10 mt-6 md:mt-0'>
       <div className='flex flex-col space-y-4'>
@@ -31,7 +31,7 @@ export default function Details({
             <VideoTags key={genre.id} name={genre.name} />
           ))}
         </div>
-        <DetailsActions type={type} id={id} title={title} />
+        <DetailsActions type={type} id={id} />
       </div>
 
       <div className='w-full flex flex-col md:grid grid-cols-3 gap-16 mt-6'>

@@ -14,13 +14,14 @@ export default function DashboardSeriesDetails({
 }: DashboardVideoType) {
   // console.log(details);
 
-  const episodesRunTime = details.episode_run_time ? details.episode_run_time.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  ) : 0;
+  const episodesRunTime = details.episode_run_time
+    ? details.episode_run_time.reduce(
+        (accumulator, currentValue) => accumulator + currentValue,
+        0
+      )
+    : 0;
 
   // console.log();
-  
 
   return (
     <div className='w-full flex flex-col md:grid grid-cols-[1fr_2fr_1fr]'>
@@ -29,8 +30,15 @@ export default function DashboardSeriesDetails({
         poster_path={details.poster_path}
         date={details.first_air_date}
       />
-      <Details type="series" id={details.id} title={details.original_name} overview={details.overview} genres={details.genre}/>
-      <RelatedMovies type="series" movieId={details.id}/>
+
+      <Details
+        type='series'
+        id={details.id}
+        title={details.original_name}
+        overview={details.overview}
+        genres={details.genre}
+      />
+      <RelatedMovies type='series' movieId={details.id} />
     </div>
   );
 }

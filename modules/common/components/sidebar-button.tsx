@@ -39,7 +39,7 @@ export default function SidebarButton({
           <Button
             asChild={!disabled}
             variant={"ghost"}
-            className={`rounded-full flex items-center justify-center px-1.5 py-[10px] hover:bg-foreground hover:text-background border border-transparent transition-all duration-300 ${
+            className={`rounded-full flex items-center justify-center px-2.5 py-[10px] hover:bg-foreground hover:text-background border border-transparent transition-all duration-300 ${
               isActive ? "border bg-foreground text-background" : ""
             }`}
             disabled={disabled}

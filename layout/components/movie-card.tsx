@@ -2,30 +2,17 @@
 
 "use client";
 
-import { convertDate, modTitle } from "@/lib/helpers/helpers";
+import { convertDate } from "@/lib/helpers/helpers";
 import { Text } from "@/modules/common/components/text";
-import { Button } from "@/modules/common/ui/button";
+
 import { Separator } from "@/modules/common/ui/separator";
-import { Bookmark, Heart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/modules/common/ui/tooltip";
-import { toast } from "sonner";
-import useWatchlistStore from "@/modules/store/watchlist-store";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
+
 import SignAlert from "@/modules/common/components/sign-alert";
-import useSendData from "@/hooks/use-send-data";
-import WatchlistStateType from "@/modules/store/check-watchlist-store";
-import { useQuery } from "@tanstack/react-query";
-import { watchlistIds } from "@/lib/services/tmdb-services";
-import useWatchlistState from "@/modules/store/check-watchlist-store";
+import { Star } from "lucide-react";
+import FavButton from "./fav-button";
 
 interface MovieCardProps {
   posterPath: string;
@@ -46,43 +33,11 @@ export default function MovieCard({
   id,
   type,
 }: MovieCardProps) {
-  const [fav, setFav] = useState(false);
-  const [addWatchlist, setAddWatchlist] = useState(false);
-  // const { addToWatchlist } = useWatchlistStore();
-  const { sendDataToWatchlist, dataSent } = useSendData();
-
-  // const { checkIfInWatchlist } = useCheckWatchlist();
-
   const triggerRef = useRef<HTMLButtonElement>(null);
-
-  const [user] = useAuthState(auth);
 
   const movieYear = convertDate(year as string);
   const movieRating =
     typeof rating === "number" && !isNaN(rating) ? rating.toFixed(1) : "N/A";
-
-  // useEffect(() => {
-  //   checkIfInWatchlist(id);
-  // }, [id, checkIfInWatchlist]);
-
-  const setWatchlistHandler = () => {
-    sendDataToWatchlist({ title, id, type });
-    setFav((prev) => !prev);
-    if (user) {
-      setAddWatchlist((prev) => !prev);
-    } else {
-      if (triggerRef.current) {
-        triggerRef.current.click();
-        setFav(false);
-      }
-      return;
-    }
-  };
-
-  if (addWatchlist)
-    toast.success(
-      `${type === "series" ? "Series" : "Movie"} added to your watchlist`
-    );
 
   return (
     <>
@@ -135,109 +90,15 @@ export default function MovieCard({
             </div>
 
             <FavButton
-              onClickFav={setWatchlistHandler}
-              fav={fav}
-              isWatchlist={addWatchlist || dataSent}
               id={id}
-              setFav={setFav}
               type={type}
+              triggerRef={triggerRef}
+              title={title}
             />
           </div>
         </div>
       </div>
       <SignAlert trigger={triggerRef} />
-    </>
-  );
-}
-
-function FavButton({
-  isWatchlist,
-  onClickFav,
-  fav,
-  id,
-  setFav,
-  type,
-}: {
-  onClickFav: () => void;
-  fav: boolean;
-  isWatchlist?: boolean;
-  id: number;
-  setFav: (value: boolean) => void;
-  type: "series" | "movie";
-}) {
-  const { removeDataFromWatchlist, dataSent } = useSendData();
-  const { setInWatchlist } = useWatchlistState();
-
-  const { data: listIds } = useQuery({
-    queryKey: ["watchlistIds", fav],
-    queryFn: () => watchlistIds(),
-  });
-
-  const matchedItem = listIds?.find((listId) => listId === id);
-
-  const removeFromWatchlistHandler = () => {
-    removeDataFromWatchlist(id);
-    setFav(false);
-    setInWatchlist(false);
-  };
-
-  useEffect(() => {
-    if (dataSent) {
-      toast.success(
-        `${type === "series" ? "Series" : "Movie"} removed from watchlist`
-      );
-    }
-  }, [dataSent, type]);
-
-  return (
-    <>
-      {!fav && !matchedItem ? (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={onClickFav}
-                variant={"ghost"}
-                className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
-                <Heart
-                  size={20}
-                  strokeWidth={1}
-                  color='#f84531'
-                  fill={"transparent"}
-                />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <Text variant={"p"} className='text-[10px]'>
-                Add to watchlist
-              </Text>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      ) : (
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                onClick={removeFromWatchlistHandler}
-                variant={"ghost"}
-                className='bg-none hover:bg-transparent active:scale-75 transition-all duration-300'>
-                <Heart
-                  size={20}
-                  strokeWidth={1}
-                  color='#f84531'
-                  fill={"#f84531"}
-                />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <Text variant={"p"} className='text-[10px]'>
-                Remove from watchlist
-              </Text>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      )}
     </>
   );
 }
